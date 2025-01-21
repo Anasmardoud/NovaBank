@@ -1,0 +1,109 @@
+/* Reset default margins and paddings */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Header Styles */
+header {
+  background-color: #d5d5d5;
+  color: white;
+  padding: 1rem 0;
+}
+
+header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+header .logo {
+  margin-left: 0;
+}
+
+header .logo a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header .logo img {
+  height: 50px;
+  width: auto;
+  margin-left: -120px;
+}
+
+header .logo .bank-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+}
+
+header .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+header .nav-links a {
+  color: rgb(0, 0, 0);
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+header .nav-links a:hover {
+  color: #0f7f0f;
+}
+
+/* Active Link Styles */
+header .nav-links a.active {
+  border-bottom: 2px solid #0f7f0f;
+  padding-bottom: 5px;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Footer Styles */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: auto;
+}
+
+/* Toast Messages */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 1rem;
+  border-radius: 5px;
+  color: white;
+  z-index: 1000;
+}
+
+.toast.success {
+  background-color: #28a745;
+}
+
+.toast.error {
+  background-color: #dc3545;
+}

@@ -1,0 +1,162 @@
+/* Login Grid Layout */
+.login-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+}
+
+/* Left Column: Image */
+.login-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #017a17, #0056b3);
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.login-image img {
+  width: 80%;
+  height: auto;
+  max-width: 400px;
+  border-radius: 10px;
+}
+
+/* Right Column: Login Form */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: white;
+}
+
+.login-form h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+
+/* Form Group Styles */
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.form-group select,
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+  border-color: #0a6312;
+}
+
+/* Password Container Styles */
+.password-container {
+  position: relative;
+}
+
+.password-input {
+  position: relative;
+}
+
+.password-input input {
+  width: 100%;
+  padding-right: 40px; /* Space for the eye icon */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.eye-icon {
+  font-size: 18px;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.eye-icon:hover {
+  color: #007bff; /* Change color on hover */
+}
+
+.toggle-password:hover {
+  color: #00a830;
+}
+
+/* Password Strength Message Styles */
+.password-strength-message {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.password-strength-message.weak {
+  color: #ff0000; /* Red for weak */
+}
+
+.password-strength-message.medium {
+  color: #ffa500; /* Orange for medium */
+}
+
+.password-strength-message.strong {
+  color: #008000; /* Green for strong */
+}
+
+/* Login Button Styles */
+.login-button {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #279b08;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #28d353;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .login-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .login-image {
+    height: 40vh;
+  }
+
+  .login-form {
+    padding: 1rem;
+  }
+}

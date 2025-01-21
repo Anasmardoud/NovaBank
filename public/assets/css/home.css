@@ -1,0 +1,109 @@
+/* Hero Section */
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 2rem;
+  background-color: #f6f3f3;
+}
+
+.hero-container {
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
+  width: 100%;
+  gap: 2rem;
+}
+
+/* Left Section: Branding and Buttons */
+.hero-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.hero-left h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 1rem;
+}
+
+.hero-left .tagline {
+  font-size: 1.5rem;
+  color: #393939;
+  margin-bottom: 1.5rem;
+}
+
+.hero-left .features-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.hero-left .features-list li {
+  font-size: 1.1rem;
+  color: #151515;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-left .features-list li i {
+  color: #28d883;
+}
+
+.hero-left .cta-text {
+  font-size: 1.25rem;
+  color: #393939;
+  margin-bottom: 2rem;
+}
+
+.hero-left .cta-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #448e2d;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.hero-left .cta-button:hover {
+  background-color: #293d0b;
+}
+
+/* Right Section: Image */
+.hero-right {
+  flex: 1;
+  text-align: center;
+}
+
+.hero-right img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-left {
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-right img {
+    max-width: 80%;
+  }
+}
