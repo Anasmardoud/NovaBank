@@ -1,73 +1,68 @@
 <?php
+require_once __DIR__ . '/../models/Database.php';
+require_once __DIR__ . '/../models/Admin.php';
+require_once __DIR__ . '/../models/Client.php';
+
 class AuthController
 {
     private $adminModel;
     private $clientModel;
 
-    public function __construct($adminModel, $clientModel)
+    public function __construct()
     {
-        $this->adminModel = $adminModel;
-        $this->clientModel = $clientModel;
+        global $conn;
+        $this->adminModel = new Admin();
+        $this->clientModel = new Client();
     }
-
-    public function login()
+    public function login_page()
+    {
+        error_log("Login page accessed");
+        include __DIR__ . '/../views/auth/login.php';
+    }
+    public function login_algorithm()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Validate CSRF token
-            if (!Helper::validateCsrfToken($_POST['csrf_token'])) {
-                Helper::log("CSRF token validation failed.", 'ERROR');
-                die("CSRF token validation failed.");
-            }
+            $username = htmlspecialchars($_POST['username']);
+            $password = htmlspecialchars($_POST['client-password']);
+            $accountType = htmlspecialchars($_POST['account-type']);
 
-            // Sanitize and validate inputs
-            $username = Helper::sanitizeInput($_POST['username']);
-            $password = Helper::sanitizeInput($_POST['client-password']);
-
-            if (!Helper::validateEmail($username)) {
-                Helper::log("Invalid email format: $username", 'ERROR');
-                die("Invalid email format.");
-            }
-
-            if (!Helper::validatePassword($password)) {
-                Helper::log("Weak password attempt for user: $username", 'WARNING');
-                die("Password must be at least 8 characters long.");
-            }
-
-            // Proceed with login logic
-            if ($_POST['account-type'] === 'admin') {
+            if ($accountType === 'admin') {
                 $user = $this->adminModel->findByUsername($username);
-            } elseif ($_POST['account-type'] === 'client') {
+            } elseif ($accountType === 'client') {
                 $user = $this->clientModel->findByUsername($username);
             } else {
                 die("Invalid account type.");
             }
 
             if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['user_id'] = $user[$_POST['account-type'] . '_id'];
-                $_SESSION['role'] = $_POST['account-type'];
-                Helper::log("User logged in: $username", 'INFO');
+                // Set session variables
+                $_SESSION['user_id'] = $user[$accountType . '_id'];
+                $_SESSION['username'] = $user['username']; // Set username
+                $_SESSION['created_at'] = $user['created_at']; // Set creation date
+                $_SESSION['role'] = $accountType;
 
                 // Redirect based on user type
-                if ($_POST['account-type'] === 'admin') {
-                    header('Location: /admin/dashboard');
+                if ($accountType === 'admin') {
+                    header('Location: /PHPLearning/NovaBank/public/admin/dashboard');
                 } else {
-                    header('Location: /client/dashboard');
+                    header('Location: /PHPLearning/NovaBank/public/client/dashboard');
                 }
                 exit();
             } else {
-                Helper::log("Failed login attempt for user: $username", 'WARNING');
                 die("Invalid credentials.");
             }
         } else {
             include __DIR__ . '/../views/auth/login.php';
         }
     }
-
     public function logout()
     {
+        // Log logout action
+        error_log("User logged out: User ID = {$_SESSION['user_id']}, Role = {$_SESSION['role']}", 0);
+
         // Destroy the session and redirect to the login page
         session_destroy();
-        header('Location: /login');
+        header('Location: /PHPLearning/NovaBank/public/login_page');
         exit();
     }
 }

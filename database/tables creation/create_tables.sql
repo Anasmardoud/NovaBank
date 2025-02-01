@@ -48,9 +48,11 @@ CREATE TABLE LOAN (
     loan_type ENUM('Personal', 'Home', 'Car') NOT NULL,
     status ENUM('Pending', 'Approved', 'Rejected') DEFAULT 'Pending',
     start_date DATE,
-	ALTER TABLE LOAN ADD COLUMN remaining_balance DECIMAL(15, 2) DEFAULT 0.00;
+	remaining_balance DECIMAL(15, 2) DEFAULT 0.00;
     end_date DATE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    total_interest DECIMAL(15,2) DEFAULT 0.00 -- amount * interest_rate * term_months = bank profit
+    message TEXT,
     FOREIGN KEY (client_id) REFERENCES CLIENT(client_id) ON DELETE CASCADE,
     FOREIGN KEY (admin_id) REFERENCES ADMIN(admin_id) ON DELETE SET NULL
 );
@@ -72,22 +74,10 @@ CREATE TABLE TRANSACTION (
     receiver_account_id INT,
     amount DECIMAL(15, 2) NOT NULL,
     transaction_type ENUM('Deposit', 'Withdrawal', 'Transfer') NOT NULL,
-    message TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     status ENUM('Success', 'Failed') DEFAULT 'Success',
     FOREIGN KEY (sender_account_id) REFERENCES ACCOUNT(account_id) ON DELETE CASCADE,
     FOREIGN KEY (receiver_account_id) REFERENCES ACCOUNT(account_id) ON DELETE CASCADE
-);
-
--- Table for NOTIFICATION
-CREATE TABLE NOTIFICATION (
-    notification_id INT AUTO_INCREMENT PRIMARY KEY,
-    client_id INT,
-    message TEXT NOT NULL,
-    type ENUM('Alert', 'Reminder') NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status ENUM('Read', 'Unread') DEFAULT 'Unread',
-    FOREIGN KEY (client_id) REFERENCES CLIENT(client_id) ON DELETE CASCADE
 );
 --Table for Deposit
 CREATE TABLE DEPOSIT (
@@ -101,7 +91,7 @@ CREATE TABLE DEPOSIT (
     FOREIGN KEY (admin_id) REFERENCES ADMIN(admin_id) ON DELETE CASCADE
 );
 
---- set pointer of the auto incremant 
+--- set pointer of the auto increment 
 
 ALTER TABLE ADMIN AUTO_INCREMENT = 1;
 ALTER TABLE CLIENT AUTO_INCREMENT = 1;
@@ -109,5 +99,4 @@ ALTER TABLE ACCOUNT AUTO_INCREMENT = 1;
 ALTER TABLE LOAN AUTO_INCREMENT = 1;
 ALTER TABLE IMAGE AUTO_INCREMENT = 1;
 ALTER TABLE TRANSACTION AUTO_INCREMENT = 1;
-ALTER TABLE NOTIFICATION AUTO_INCREMENT = 1;
 ALTER TABLE DEPOSIT AUTO_INCREMENT = 1;

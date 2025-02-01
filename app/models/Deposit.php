@@ -1,27 +1,30 @@
 <?php
+require_once __DIR__ . '/Database.php';
+
 class Deposit
 {
-    private $db;
+    private $conn;
 
-    public function __construct($db)
+    public function __construct()
     {
-        $this->db = $db;
+        global $conn;
+        $this->conn = $conn;
     }
 
     // Create a new deposit using the CreateDeposit procedure
     public function create($accountId, $adminId, $amount)
     {
-        $stmt = $this->db->prepare("CALL CreateDeposit(?, ?, ?, @status_message)");
+        $stmt = $this->conn->prepare("CALL CreateDeposit(?, ?, ?, @status_message)");
         $stmt->bind_param("iid", $accountId, $adminId, $amount);
 
         try {
             $stmt->execute();
-            $result = $this->db->query("SELECT @status_message AS status_message");
+            $result = $this->conn->query("SELECT @status_message AS status_message");
             $statusMessage = $result->fetch_assoc()['status_message'];
-            Helper::log("Deposit created: $statusMessage", 'INFO');
+            error_log("Deposit created: $statusMessage", 0);
             return $statusMessage;
         } catch (mysqli_sql_exception $e) {
-            Helper::log("Deposit creation failed: " . $e->getMessage(), 'ERROR');
+            error_log("Deposit creation failed: " . $e->getMessage(), 0);
             return "Deposit creation failed.";
         }
     }
@@ -29,7 +32,7 @@ class Deposit
     // Fetch deposit history using the ShowDepositHistory procedure
     public function getDepositHistory($accountNumber)
     {
-        $stmt = $this->db->prepare("CALL ShowDepositHistory(?)");
+        $stmt = $this->conn->prepare("CALL ShowDepositHistory(?)");
         $stmt->bind_param("i", $accountNumber);
 
         try {
@@ -37,7 +40,7 @@ class Deposit
             $result = $stmt->get_result();
             return $result->fetch_all(MYSQLI_ASSOC);
         } catch (mysqli_sql_exception $e) {
-            Helper::log("Failed to fetch deposit history: " . $e->getMessage(), 'ERROR');
+            error_log("Failed to fetch deposit history: " . $e->getMessage(), 0);
             return [];
         }
     }
@@ -45,7 +48,7 @@ class Deposit
     // Get a single deposit by ID
     public function getDepositById($depositId)
     {
-        $stmt = $this->db->prepare("SELECT * FROM DEPOSIT WHERE deposit_id = ?");
+        $stmt = $this->conn->prepare("SELECT * FROM DEPOSIT WHERE deposit_id = ?");
         $stmt->bind_param("i", $depositId);
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
@@ -54,7 +57,7 @@ class Deposit
     // Delete a deposit
     public function delete($depositId)
     {
-        $stmt = $this->db->prepare("DELETE FROM DEPOSIT WHERE deposit_id = ?");
+        $stmt = $this->conn->prepare("DELETE FROM DEPOSIT WHERE deposit_id = ?");
         $stmt->bind_param("i", $depositId);
         return $stmt->execute();
     }

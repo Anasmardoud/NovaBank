@@ -1,9 +1,3 @@
-<?php
-// login.php
-include __DIR__ . '/../../core/Helper.php';
-include __DIR__ . '/../layouts/header.php';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +12,12 @@ include __DIR__ . '/../layouts/header.php';
 </head>
 
 <body>
+    <?php
+    $currentPage = 'login'; // Set the current page
+    include __DIR__ . '/../layouts/header.php';
+    ?>
+
+    <!-- Rest of the login page content -->
     <main>
         <div class="login-grid">
             <!-- Left Column: Image -->
@@ -28,7 +28,7 @@ include __DIR__ . '/../layouts/header.php';
             <!-- Right Column: Login Form -->
             <div class="login-form">
                 <h2>Login to Nova Bank</h2>
-                <form action="/PHPLearning/NovaBank/public/login_process.php" method="POST">
+                <form action="/PHPLearning/NovaBank/public/login_algorithm" method="POST">
                     <!-- Account Type Dropdown -->
                     <div class="form-group">
                         <label for="account-type">Choose Your Account Type:</label>

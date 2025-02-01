@@ -14,7 +14,6 @@ class ClientController
         $this->notificationModel = $notificationModel;
     }
 
-    // Client dashboard
     public function dashboard()
     {
         $clientId = $_SESSION['user_id'];
@@ -23,18 +22,17 @@ class ClientController
         include 'app/views/client/dashboard.php';
     }
 
-    // Edit client profile
     public function editProfile()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $clientId = $_SESSION['user_id'];
-            $username = Helper::sanitizeInput($_POST['username']);
-            $email = Helper::sanitizeInput($_POST['email']);
-            $phoneNumber = Helper::sanitizeInput($_POST['phone_number']);
-            $address = Helper::sanitizeInput($_POST['address']);
+            $username = htmlspecialchars($_POST['username']);
+            $email = htmlspecialchars($_POST['email']);
+            $phoneNumber = htmlspecialchars($_POST['phone_number']);
+            $address = htmlspecialchars($_POST['address']);
 
             if ($this->clientModel->update($clientId, $username, $email, $phoneNumber, $address, 'Active')) {
-                Helper::log("Client profile updated: $username", 'INFO');
+                error_log("Client profile updated: $username", 0);
                 header('Location: /client/dashboard');
             } else {
                 die("Failed to update profile.");
@@ -45,7 +43,6 @@ class ClientController
         }
     }
 
-    // View transaction history
     public function history()
     {
         $clientId = $_SESSION['user_id'];
@@ -53,16 +50,15 @@ class ClientController
         include 'app/views/client/history.php';
     }
 
-    // Request a loan
     public function requestLoan()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $clientId = $_SESSION['user_id'];
-            $amount = Helper::sanitizeInput($_POST['amount']);
-            $message = Helper::sanitizeInput($_POST['message']);
+            $amount = htmlspecialchars($_POST['amount']);
+            $message = htmlspecialchars($_POST['message']);
 
             if ($this->loanModel->create($clientId, $amount, $message)) {
-                Helper::log("Loan requested by client: $clientId", 'INFO');
+                error_log("Loan requested by client: $clientId", 0);
                 header('Location: /client/loan');
             } else {
                 die("Failed to request loan.");

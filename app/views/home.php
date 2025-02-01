@@ -12,7 +12,8 @@
 </head>
 
 <body>
-    <?php include __DIR__ . '/layouts/header.php'; ?>
+    <?php $currentPage = 'home';
+    include __DIR__ . '/layouts/header.php'; ?>
 
     <main>
         <!-- Hero Section -->
@@ -29,7 +30,7 @@
                         <li><i class="fas fa-check-circle"></i> Fast Loan Approvals</li>
                     </ul>
                     <p class="cta-text">Join thousands of satisfied customers today!</p>
-                    <a href="/PHPLearning/NovaBank/public/index.php" class="cta-button">Get Started</a>
+                    <a href="/PHPLearning/NovaBank/public/login_page" class="cta-button">Get Started</a>
                 </div>
 
                 <!-- Right Section: Image -->

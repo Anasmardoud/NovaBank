@@ -1,19 +1,16 @@
 <?php
-class Database
-{
-    private $connection;
+// Database configuration
+$host = 'localhost';
+$dbname = 'nova_bank';
+$username = 'root';
+$password = '';
 
-    public function __construct($host, $username, $password, $dbname)
-    {
-        $this->connection = new mysqli($host, $username, $password, $dbname);
-        if ($this->connection->connect_error) {
-            Helper::log("Database connection failed: " . $this->connection->connect_error, 'ERROR');
-            die("We are currently experiencing technical difficulties. Please try again later.");
-        }
-    }
+// Create a connection
+$conn = mysqli_connect($host, $username, $password, $dbname);
 
-    public function getConnection()
-    {
-        return $this->connection;
-    }
+// Check the connection
+if (!$conn) {
+    // Log the error and display a generic message
+    error_log("Database connection failed: " . mysqli_connect_error(), 0);
+    die("We are currently experiencing technical difficulties. Please try again later.");
 }

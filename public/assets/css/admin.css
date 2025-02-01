@@ -8,10 +8,10 @@
 /* Sidebar */
 .sidebar {
   width: 250px;
-  background-color: #333;
+  background-color: #0f5920; /* Green theme */
   color: white;
   padding: 1.5rem;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 0 5px rgba(4, 85, 31, 0.1);
 }
 
 .sidebar h2 {
@@ -48,7 +48,7 @@
 }
 
 .sidebar nav ul li a:hover {
-  background-color: #444;
+  background-color: #28ab45; /* Darker green on hover */
   transform: translateX(5px);
 }
 
@@ -57,12 +57,12 @@
 }
 
 .sidebar nav ul li.active a {
-  background-color: #007bff;
+  background-color: #3b9a52; /* Active link color */
   font-weight: bold;
 }
 
 .sidebar nav ul li.active a:hover {
-  background-color: #0056b3;
+  background-color: #1c7430; /* Darker active link color on hover */
 }
 
 /* Main Content */
@@ -78,11 +78,15 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 10px; /* Add border radius */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
 }
 
 .header h1 {
   font-size: 2rem;
-  color: #333;
+  color: #28a745; /* Green theme */
 }
 
 .user-info {
@@ -90,6 +94,23 @@
   align-items: center;
   gap: 10px;
   color: #555;
+}
+
+.user-info i {
+  font-size: 1.5rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  color: #28a745;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 10px;
+  color: #095607;
 }
 
 .user-info i {
@@ -105,30 +126,36 @@
   margin-bottom: 2rem;
 }
 
+.dash-border {
+  border: 1px solid #ddd;
+  padding: 1.5rem;
+  border-radius: 10px;
+}
+
 .content-section h2 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
-  color: #333;
+  color: #28a745; /* Green theme */
+}
+
+.content-section p {
+  margin: 0.5rem 0;
+  color: #555;
 }
 
 /* Form Styles */
 .form-group {
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .form-group label {
   display: block;
   font-size: 0.9rem;
   margin-bottom: 0.25rem;
-  color: #555;
+  color: rgb(52, 50, 50);
 }
 
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"],
-.form-group input[type="number"],
-.form-group select,
-.form-group textarea {
+.form-group input[type="password"] {
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
@@ -138,98 +165,13 @@
   transition: border-color 0.3s ease;
 }
 
-.form-group input[type="text"]:focus,
-.form-group input[type="email"]:focus,
-.form-group input[type="password"]:focus,
-.form-group input[type="number"]:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  border-color: #007bff;
+.form-group input[type="password"]:focus {
+  border-color: #28a745; /* Green theme */
 }
 
-/* Buttons */
-.btn {
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  color: white;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-  background-color: #0056b3;
-}
-
-.btn-edit {
-  background-color: #28a745;
-}
-
-.btn-delete {
-  background-color: #dc3545;
-}
-
-.btn-cancel {
-  background-color: #6c757d;
-}
-
-/* Table Styles */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-table th,
-table td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-table th {
-  background-color: #007bff;
-  color: white;
-}
-
-table tr:hover {
-  background-color: #f1f1f1;
-}
-
-/* Password Strength Feedback Styles */
-#password-strength {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  font-weight: bold;
-}
-
-#password-strength.weak {
-  color: #ff0000;
-}
-
-#password-strength.medium {
-  color: #ffa500;
-}
-
-#password-strength.strong {
-  color: #008000;
-}
-
-/* Password Container Styles */
+/* Password Container */
 .password-container {
   position: relative;
-}
-
-.password-container input[type="password"],
-.password-container input[type="text"] {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  outline: none;
 }
 
 .toggle-password {
@@ -242,10 +184,316 @@ table tr:hover {
 }
 
 .toggle-password:hover {
-  color: #007bff;
+  color: #28a745; /* Green theme */
 }
 
-/* Modal Styles */
+/* Buttons */
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #28a745; /* Green theme */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+/* Password Strength Message Styles */
+.password-strength-message {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.password-strength-message.weak {
+  color: #ff0000; /* Red for weak */
+}
+
+.password-strength-message.medium {
+  color: #ffa500; /* Orange for medium */
+}
+
+.password-strength-message.strong {
+  color: #008000; /* Green for strong */
+}
+/* Form Styles */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #28a745; /* Green theme */
+}
+
+/* Password Container */
+.password-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+}
+
+.toggle-password:hover {
+  color: #28a745; /* Green theme */
+}
+
+/* Buttons */
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #28a745; /* Green theme */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+/* Slide-in Animation */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+/* Add Accounts Section Styling */
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-weight: bold;
+}
+
+/* Checkbox and Label Styling */
+.form-group input[type="checkbox"] {
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.form-group input[type="checkbox"] + label {
+  font-weight: normal;
+  color: #333;
+  vertical-align: middle;
+}
+
+/* Balance Group Styling */
+#checking_balance_group,
+#savings_balance_group {
+  margin-top: 0.5rem;
+  margin-left: 1.5rem;
+  padding: 0.5rem;
+  border-left: 2px solid #28a745; /* Green theme */
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+#checking_balance_group label,
+#savings_balance_group label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  color: #555;
+}
+
+#checking_balance_group input[type="number"],
+#savings_balance_group input[type="number"] {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+#checking_balance_group input[type="number"]:focus,
+#savings_balance_group input[type="number"]:focus {
+  border-color: #28a745; /* Green theme */
+}
+/* Clients Table Styling */
+.clients-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.clients-table th,
+.clients-table td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.clients-table th {
+  background-color: #28a745; /* Green theme */
+  color: white;
+}
+
+.clients-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.clients-table tr:hover {
+  background-color: #f1f1f1;
+}
+.actions-container-edit,
+.actions-container {
+  display: flex;
+  gap: 8px; /* Space between buttons */
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap; /* Allow buttons to wrap to the next line if needed */
+}
+
+/* Styles for buttons inside action containers */
+.actions-container-edit .btn,
+.actions-container .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect for buttons */
+.actions-container-edit .btn:hover,
+.actions-container .btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Action Buttons */
+/* General Button Styles */
+.btn {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+  color: white;
+  margin: 0.5px;
+}
+
+/* Approve Button */
+.btn-edit {
+  background-color: #ffb62e; /* Green */
+}
+
+.btn-edit:hover {
+  background-color: #ffce3b; /* Darker Green */
+}
+
+.btn-edit:active {
+  transform: scale(0.95);
+}
+
+/* Reject Button */
+.btn-delete {
+  background-color: #dc3545; /* Red */
+}
+
+.btn-delete:hover {
+  background-color: #c82333; /* Darker Red */
+}
+
+.btn-delete:active {
+  transform: scale(0.95);
+}
+
+/* Calculate Button */
+.btn-calculate {
+  background-color: #3aac15;
+}
+
+.btn-calculate:hover {
+  background-color: #22ed5c;
+}
+
+.btn-calculate:active {
+  transform: scale(0.95);
+}
+
+/* Disabled button styles */
+.btn-edit:disabled,
+.btn-delete:disabled {
+  background-color: #cccccc; /* Gray */
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Icon styles */
+.actions-container-edit .btn i,
+.actions-container .btn i {
+  margin-right: 5px; /* Space between icon and text */
+}
+
+/* Button Container */
+.actions-container {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .clients-table th:nth-child(2), /* Interest Rate */
+    .clients-table td:nth-child(4),
+    .clients-table th:nth-child(9), /* Message */
+    .clients-table td:nth-child(9),
+    .clients-table th:nth-child(10), /* Total Insert */
+    .clients-table td:nth-child(10) {
+    display: none;
+  }
+}
+/* Modal Styling */
 .modal {
   display: none;
   position: fixed;
@@ -254,6 +502,7 @@ table tr:hover {
   top: 0;
   width: 100%;
   height: 100%;
+  overflow: auto;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -263,44 +512,263 @@ table tr:hover {
   padding: 1.5rem;
   border-radius: 10px;
   width: 50%;
-  max-width: 500px;
+  max-width: 600px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.modal-content .close {
+.close-modal {
   float: right;
   font-size: 1.5rem;
+  font-weight: bold;
   cursor: pointer;
+  color: #555;
 }
 
-.modal-content .close:hover {
-  color: #007bff;
+.close-modal:hover {
+  color: #000;
 }
 
-/* Toast Messages */
-.toast {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 1rem;
+.modal h2 {
+  margin-bottom: 1.5rem;
+  color: #28a745; /* Green theme */
+}
+
+.modal .form-group {
+  margin-bottom: 1rem;
+}
+
+.modal .form-group label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  color: #555;
+}
+
+.modal .form-group input[type="text"],
+.modal .form-group input[type="email"],
+.modal .form-group input[type="number"],
+.modal .form-group textarea,
+.modal .form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
   border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.modal .form-group input[type="text"]:focus,
+.modal .form-group input[type="email"]:focus,
+.modal .form-group input[type="number"]:focus,
+.modal .form-group textarea:focus,
+.modal .form-group select:focus {
+  border-color: #28a745; /* Green theme */
+}
+
+.modal .btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #28a745; /* Green theme */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal .btn:hover {
+  background-color: #218838; /* Darker green */
+}
+/* Create Deposit Form Styles */
+.create-deposit-form {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.create-deposit-form h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #28a745; /* Green theme */
+}
+
+.create-deposit-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.create-deposit-form label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  color: #555;
+}
+
+.create-deposit-form input[type="number"] {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.create-deposit-form input[type="number"]:focus {
+  border-color: #28a745; /* Green theme */
+}
+
+.create-deposit-form button[type="submit"] {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #28a745; /* Green theme */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-deposit-form button[type="submit"]:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+/* Edit Deposit Form Styles */
+.edit-deposit-form {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.edit-deposit-form h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #28a745; /* Green theme */
+}
+
+.edit-deposit-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.edit-deposit-form label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  color: #555;
+}
+
+.edit-deposit-form input[type="number"],
+.edit-deposit-form select {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.edit-deposit-form input[type="number"]:focus,
+.edit-deposit-form select:focus {
+  border-color: #28a745; /* Green theme */
+}
+
+.edit-deposit-form button[type="submit"] {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #28a745; /* Green theme */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-deposit-form button[type="submit"]:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+/* Dropdown Styles */
+.create-deposit-form select {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.create-deposit-form select:focus {
+  border-color: #28a745; /* Green theme */
+}
+/*loan calculation*/
+form {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border 0.3s ease-in-out;
+}
+
+input[type="number"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+span {
+  display: block;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #555;
+}
+/* Loan Table Styles */
+.loans-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.loans-table th,
+.loans-table td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.loans-table th {
   background-color: #28a745;
   color: white;
-  z-index: 1000;
-  animation: fadeInOut 3s ease-in-out;
 }
 
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+.loans-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.loans-table tr:hover {
+  background-color: #f1f1f1;
 }
