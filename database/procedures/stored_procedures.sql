@@ -55,7 +55,7 @@ END;
 DELIMITER ;
 
 
-
+ -- may be in the future
 --2. Generate Account Statements (Stored Procedure)
 /*Fetch transactions for a specific account within a given date range and format them. */
 
@@ -78,40 +78,6 @@ BEGIN
       AND created_at BETWEEN StartDate AND EndDate
     ORDER BY created_at DESC;
 END;
-//
-
-DELIMITER ;
-
---3. Validate Foreign Key Relationships (Stored Procedure)
-/*Ensure that client_id, admin_id, or account_id exists before performing operations.*/
-
-DELIMITER //
- 
-CREATE PROCEDURE ValidateForeignKeys(
-    IN ClientID INT,
-    IN AdminID INT,
-    IN AccountID INT
-)
-BEGIN
-    -- Validate ClientID
-    IF ClientID IS NOT NULL AND NOT EXISTS (SELECT 1 FROM CLIENT WHERE client_id = ClientID) THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Client ID does not exist.';
-    END IF;
-
-    -- Validate AdminID
-    IF AdminID IS NOT NULL AND NOT EXISTS (SELECT 1 FROM ADMIN WHERE admin_id = AdminID) THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Admin ID does not exist.';
-    END IF;
-
-    -- Validate AccountID
-    IF AccountID IS NOT NULL AND NOT EXISTS (SELECT 1 FROM ACCOUNT WHERE account_id = AccountID) THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Account ID does not exist.';
-    END IF;
-END;
-//
 
 DELIMITER ;
 
@@ -157,6 +123,7 @@ DELIMITER ;
 DELIMITER ;
 
 /*Stored Procedure for show the deposit history */
+--i use it
 DELIMITER $$
 
 CREATE PROCEDURE ShowDepositHistory(
@@ -183,13 +150,10 @@ BEGIN
 END$$
 
 DELIMITER ;
-
-
+DELIMITER $$
 DELIMITER $$
 
-CREATE PROCEDURE CalculateLoan(
-    IN p_loan_id INT
-)
+CREATE PROCEDURE CalculateLoan(IN p_loan_id INT)
 BEGIN
     DECLARE v_loan_amount DECIMAL(15, 2);
     DECLARE v_interest_rate DECIMAL(5, 2);
@@ -201,35 +165,37 @@ BEGIN
     DECLARE v_end_date DATE;
 
     -- Fetch loan details
-    SELECT 
-        amount, 
-        interest_rate, 
-        term_months, 
+    SELECT
+        amount,
+        interest_rate,
+        term_months,
         start_date
-    INTO 
-        v_loan_amount, 
-        v_interest_rate, 
-        v_term_months, 
-        v_start_date
+    INTO v_loan_amount, v_interest_rate, v_term_months, v_start_date
     FROM LOAN
     WHERE loan_id = p_loan_id;
 
-    -- Calculate monthly interest rate
-    SET v_interest_rate = v_interest_rate / 100 / 12;
+    -- Check if term_months is greater than 0 to avoid division by zero
+    IF v_term_months > 0 THEN
+        -- Calculate monthly interest rate
+        SET v_interest_rate = v_interest_rate / 100 / 12;
 
-    -- Calculate monthly payment using the loan formula
-    SET v_monthly_payment = (v_loan_amount * v_interest_rate) / 
-                            (1 - POW(1 + v_interest_rate, -v_term_months));
+        -- Calculate monthly payment using the loan formula
+        SET v_monthly_payment = (v_loan_amount * v_interest_rate) / (1 - POW(1 + v_interest_rate, -v_term_months));
 
-    -- Calculate total interest
-    SET v_total_interest = (v_monthly_payment * v_term_months) - v_loan_amount;
+        -- Calculate total interest
+        SET v_total_interest = (v_monthly_payment * v_term_months) - v_loan_amount;
 
-    -- Calculate end date
-    SET v_end_date = DATE_ADD(v_start_date, INTERVAL v_term_months MONTH);
+        -- Calculate end date
+        SET v_end_date = DATE_ADD(v_start_date, INTERVAL v_term_months MONTH);
+    ELSE
+        SET v_monthly_payment = 0;  -- Default value to avoid NULL
+        SET v_total_interest = 0;   -- Default value
+        SET v_end_date = v_start_date;  -- Same start date if no term
+    END IF;
 
     -- Update the LOAN table with calculated values
     UPDATE LOAN
-    SET 
+    SET
         monthly_payment = v_monthly_payment,
         total_interest = v_total_interest,
         remaining_balance = v_loan_amount,

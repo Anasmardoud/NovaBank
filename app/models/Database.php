@@ -1,9 +1,15 @@
 <?php
+
+/**
+ * Database configuration and connection setup.
+ * This file initializes the database connection using mysqli.
+ */
+
 // Database configuration
-$host = 'localhost';
-$dbname = 'nova_bank';
-$username = 'root';
-$password = '';
+$host = 'localhost';       // Database host
+$dbname = 'nova_bank';     // Database name
+$username = 'root';        // Database username
+$password = '';            // Database password
 
 // Create a connection
 $conn = mysqli_connect($host, $username, $password, $dbname);

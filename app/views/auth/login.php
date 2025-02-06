@@ -64,6 +64,24 @@
             </div>
         </div>
     </main>
+    <!-- Toast Container -->
+    <div id="toast-container">
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="toast success">
+                <span class="toast-message"><?= $_SESSION['success'] ?></span>
+                <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+            </div>
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="toast error">
+                <span class="toast-message"><?= $_SESSION['error'] ?></span>
+                <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+            </div>
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+    </div>
 
     <?php include __DIR__ . '/../layouts/footer.php'; ?>
 

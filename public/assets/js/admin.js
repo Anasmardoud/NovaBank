@@ -219,15 +219,44 @@ function validateDepositForm() {
     const accountId = document.getElementById('account_id').value;
     const amount = document.getElementById('amount').value;
 
-    if (!accountId || !amount) {
-        alert('Please fill in all fields.');
+    if (!accountId) {
+        alert('Please select an account.');
         return false;
     }
 
-    if (amount <= 0) {
+    if (!amount || amount <= 0) {
         alert('Amount must be greater than 0.');
         return false;
     }
 
     return true;
+}
+// Function to confirm loan actions
+function confirmLoanAction(action, loanId) {
+    if (confirm(`Are you sure you want to ${action} this loan?`)) {
+        window.location.href = `/PHPLearning/NovaBank/public/admin/${action}-loan/${loanId}`;
+    }
+}
+function approveLoan(loanId) {
+    if (confirm('Are you sure you want to approve this loan?')) {
+        fetch(`/PHPLearning/NovaBank/public/admin/approve-loan`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `loan_id=${loanId}`,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Loan approved successfully.');
+                location.reload(); // Reload the page to reflect changes
+            } else {
+                alert('Failed to approve loan.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 }

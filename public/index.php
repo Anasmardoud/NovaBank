@@ -13,7 +13,6 @@ require_once __DIR__ . '/../app/models/Client.php';
 require_once __DIR__ . '/../app/models/Transaction.php';
 require_once __DIR__ . '/../app/models/Loan.php';
 require_once __DIR__ . '/../app/models/Deposit.php';
-require_once __DIR__ . '/../app/models/Notification.php';
 require_once __DIR__ . '/../app/controllers/HomeController.php';
 require_once __DIR__ . '/../app/controllers/AuthController.php';
 require_once __DIR__ . '/../app/controllers/AdminController.php';
@@ -24,12 +23,11 @@ $adminModel = new Admin();
 $clientModel = new Client();
 $transactionModel = new Transaction();
 $loanModel = new Loan();
-$notificationModel = new Notification();
 
 // Instantiate controllers
 $authController = new AuthController($adminModel, $clientModel);
-$adminController = new AdminController($clientModel, $transactionModel, $loanModel, $notificationModel);
-$clientController = new ClientController($clientModel, $transactionModel, $loanModel, $notificationModel);
+$adminController = new AdminController($clientModel, $transactionModel, $loanModel);
+$clientController = new ClientController($clientModel, $transactionModel, $loanModel);
 $homeController = new HomeController();
 
 // Get the requested URI
@@ -68,8 +66,83 @@ switch ($uri) {
     case '/admin/change-password':
         $adminController->changePassword();
         break;
-    case '/admin/create-client':
-        $adminController->createClient();
+    case '/admin/client-creation-homepage':
+        $adminController->clientCreationHomePage();
+        break;
+    case '/admin/create-client-algorithm':
+        $adminController->createClientAlgorithm();
+        break;
+    case '/admin/clients':
+        $adminController->clients();
+        break;
+    case '/admin/delete-client':
+        $adminController->deleteClient();
+        break;
+    case '/admin/edit-account':
+        $adminController->updateClient();
+        break;
+    case '/admin/deposit':
+        $adminController->deposit();
+        break;
+    case '/admin/create-deposit':
+        $adminController->createDeposit();
+        break;
+    case '/admin/edit-deposit':
+        $adminController->editDeposit();
+        break;
+    case '/admin/delete-deposit':
+        $adminController->deleteDeposit();
+        break;
+    case '/admin/edit-deposit':
+        $adminController->editDeposit();
+        break;
+    case '/admin/update-deposit':
+        $adminController->updateDeposit();
+        break;
+    case '/admin/loans':
+        $adminController->loans();
+        break;
+    case '/admin/approve-loan':
+        $adminController->approveLoan();
+        break;
+    case '/admin/reject-loan':
+        $adminController->rejectLoan();
+        break;
+    case '/admin/delete-loan':
+        $adminController->deleteLoan();
+        break;
+    case '/admin/calculate-loan-page':
+        $adminController->calculateLoanPage();
+        break;
+    case '/admin/calculate-loan':
+        $adminController->calculateLoan();
+        break;
+    case '/client/dashboard':
+        $clientController->dashboard();
+        break;
+    case '/client/accounts':
+        $clientController->accountsAction();
+        break;
+    case '/client/transferFunds':
+        $clientController->transferFunds();
+        break;
+    case '/client/profile':
+        $clientController->profileAction();
+        break;
+    case '/client/editProfile':
+        $clientController->editProfile();
+        break;
+    case '/client/transaction':
+        $clientController->transactionHome();
+        break;
+    case '/client/transactionAlgorithm':
+        $clientController->transactionAlgorithm();
+        break;
+    case '/client/loans':
+        $clientController->loansAction();
+        break;
+    case '/client/requestLoan':
+        $clientController->requestLoan();
         break;
     default:
         header('HTTP/1.1 404 Not Found');

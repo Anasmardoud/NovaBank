@@ -1,12 +1,9 @@
 <?php
-
 // Check if the user is logged in and is an admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header('Location: /PHPLearning/NovaBank/public/login');
     exit();
 }
-
-include __DIR__ . '/../layouts/header.php';
 
 // Set the current page
 $currentPage = 'dashboard';
@@ -35,7 +32,7 @@ $currentPage = 'dashboard';
                         <a href="/PHPLearning/NovaBank/public/admin/dashboard"><i class="fas fa-home"></i> Dashboard</a>
                     </li>
                     <li class="<?php echo $currentPage === 'create_client' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/create_client"><i class="fas fa-user-plus"></i> Create Client</a>
+                        <a href="/PHPLearning/NovaBank/public/admin/client-creation-homepage"><i class="fas fa-user-plus"></i> Create Client</a>
                     </li>
                     <li class="<?php echo $currentPage === 'clients' ? 'active' : ''; ?>">
                         <a href="/PHPLearning/NovaBank/public/admin/clients"><i class="fas fa-users"></i> Clients</a>
@@ -45,9 +42,6 @@ $currentPage = 'dashboard';
                     </li>
                     <li class="<?php echo $currentPage === 'loans' ? 'active' : ''; ?>">
                         <a href="/PHPLearning/NovaBank/public/admin/loans"><i class="fas fa-hand-holding-usd"></i> Loans</a>
-                    </li>
-                    <li class="<?php echo $currentPage === 'notifications' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/notifications"><i class="fas fa-bell"></i> Notifications</a>
                     </li>
                     <li>
                         <a href="/PHPLearning/NovaBank/public/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -75,11 +69,36 @@ $currentPage = 'dashboard';
                 </div>
             </div>
 
+            <!-- Toast Container -->
+            <div id="toast-container" aria-live="polite" aria-atomic="true" class="position-fixed bottom-0 end-0 p-3">
+                <!-- Success Toast -->
+                <div id="success-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+                    <div class="toast-header bg-success text-white">
+                        <strong class="me-auto">Success</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        <?php echo $_SESSION['success'] ?? ''; ?>
+                    </div>
+                </div>
+
+                <!-- Error Toast -->
+                <div id="error-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+                    <div class="toast-header bg-danger text-white">
+                        <strong class="me-auto">Error</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        <?php echo $_SESSION['error'] ?? ''; ?>
+                    </div>
+                </div>
+            </div>
+
             <!-- Change Password Form -->
             <div class="content-section">
                 <div class="dash-border">
                     <h2>Change Password</h2>
-                    <form action="/PHPLearning/NovaBank/public/admin/change_password" method="POST" onsubmit="return validatePassword()">
+                    <form action="/PHPLearning/NovaBank/public/admin/change-password" method="POST" onsubmit="return validatePassword()">
                         <div class="form-group">
                             <label for="current-password">Current Password:</label>
                             <div class="password-container">
@@ -90,32 +109,50 @@ $currentPage = 'dashboard';
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="form-group">
-                                <label for="new-password">New Password:</label>
-                                <div class="password-container">
-                                    <input type="password" id="new-password" name="new_password" required>
-                                    <span class="toggle-password" onclick="togglePasswordVisibility('new-password')">
-                                        <i class="fas fa-eye"></i>
-                                    </span>
-                                </div>
-                                <div id="password-strength-message" class="password-strength-message"></div>
+                            <label for="new-password">New Password:</label>
+                            <div class="password-container">
+                                <input type="password" id="new-password" name="new_password" required>
+                                <span class="toggle-password" onclick="togglePasswordVisibility('new-password')">
+                                    <i class="fas fa-eye"></i>
+                                </span>
                             </div>
-                            <div class="form-group">
-                                <label for="confirm-password">Confirm New Password:</label>
-                                <div class="password-container">
-                                    <input type="password" id="confirm-password" name="confirm_password" required>
-                                    <span class="toggle-password" onclick="togglePasswordVisibility('confirm-password')">
-                                        <i class="fas fa-eye"></i>
-                                    </span>
-                                </div>
+                            <div id="password-strength-message" class="password-strength-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm New Password:</label>
+                            <div class="password-container">
+                                <input type="password" id="confirm-password" name="confirm_password" required>
+                                <span class="toggle-password" onclick="togglePasswordVisibility('confirm-password')">
+                                    <i class="fas fa-eye"></i>
+                                </span>
                             </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn">Change Password</button>
-                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn">Change Password</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container">
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="toast success">
+                <span class="toast-message"><?php echo $_SESSION['success']; ?></span>
+                <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+            </div>
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="toast error">
+                <span class="toast-message"><?php echo $_SESSION['error']; ?></span>
+                <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+            </div>
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
     </div>
 
     <script src="/PHPLearning/NovaBank/public/assets/js/admin.js"></script>
