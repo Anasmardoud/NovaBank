@@ -1,7 +1,7 @@
 <?php
 // Check if the user is logged in and is a client
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'client') {
-    header('Location: /PHPLearning/NovaBank/public/login');
+    header('Location: /NovaBank/public/login');
     exit();
 }
 $currentPage = 'profile';
@@ -13,8 +13,8 @@ $currentPage = 'profile';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/PHPLearning/NovaBank/public/assets/css/client.css">
-    <link rel="stylesheet" href="/PHPLearning/NovaBank/public/assets/css/global.css">
+    <link rel="stylesheet" href="/NovaBank/public/assets/css/client.css">
+    <link rel="stylesheet" href="/NovaBank/public/assets/css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Profile Settings - Nova Bank</title>
 </head>
@@ -27,22 +27,22 @@ $currentPage = 'profile';
             <nav>
                 <ul>
                     <li class="<?php echo $currentPage === 'dashboard' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/client/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+                        <a href="/NovaBank/public/client/dashboard"><i class="fas fa-home"></i> Dashboard</a>
                     </li>
                     <li class="<?php echo $currentPage === 'accounts' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/client/accounts"><i class="fas fa-briefcase"></i> Accounts</a>
+                        <a href="/NovaBank/public/client/accounts"><i class="fas fa-briefcase"></i> Accounts</a>
                     </li>
                     <li class="<?php echo $currentPage === 'transaction' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/client/transaction"><i class="fas fa-exchange-alt"></i> Transaction</a>
+                        <a href="/NovaBank/public/client/transaction"><i class="fas fa-exchange-alt"></i> Transaction</a>
                     </li>
                     <li class="<?php echo $currentPage === 'profile' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/client/profile"><i class="fas fa-user"></i> Profile</a>
+                        <a href="/NovaBank/public/client/profile"><i class="fas fa-user"></i> Profile</a>
                     </li>
                     <li class="<?php echo $currentPage === 'loans' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/client/loans"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+                        <a href="/NovaBank/public/client/loans"><i class="fas fa-hand-holding-usd"></i> Loans</a>
                     </li>
                     <li>
-                        <a href="/PHPLearning/NovaBank/public/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        <a href="/NovaBank/public/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </li>
                 </ul>
             </nav>
@@ -62,7 +62,7 @@ $currentPage = 'profile';
             <div class="profile-settings-container">
                 <div class="profile-settings-card green-theme">
                     <h2>Edit Profile Information</h2>
-                    <form action="/PHPLearning/NovaBank/public/client/editProfile" method="POST" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to do this changes?');">
+                    <form action="/NovaBank/public/client/editProfile" method="POST" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to do this changes?');">
                         <div class="form-group">
                             <label for="username">Username:</label>
                             <input type="text" id="username" name="username" value="<?= htmlspecialchars($client['username']) ?>" required>
@@ -125,7 +125,7 @@ $currentPage = 'profile';
     </div>
 
     <?php include __DIR__ . '/../layouts/footer.php'; ?>
-    <script src="/PHPLearning/NovaBank/public/assets/js/client.js"></script>
+    <script src="/NovaBank/public/assets/js/client.js"></script>
 </body>
 
 </html>

@@ -1,3 +1,6 @@
+/*==============================================================*/
+-- DDL Script in MySQL Database for Creating Tables for Nova Bank
+/*==============================================================*/
 -- Table for ADMIN
 CREATE TABLE ADMIN (
     admin_id INT AUTO_INCREMENT PRIMARY KEY,

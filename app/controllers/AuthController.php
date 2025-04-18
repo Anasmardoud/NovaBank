@@ -59,7 +59,7 @@ class AuthController
     {
         error_log("User logged out: User ID = {$_SESSION['user_id']}, Role = {$_SESSION['role']}", 0);
         session_destroy();
-        $this->redirect('/PHPLearning/NovaBank/public/login_page');
+        $this->redirect('/NovaBank/public/login_page');
     }
 
     /**
@@ -101,9 +101,9 @@ class AuthController
     private function redirectBasedOnRole($accountType)
     {
         if ($accountType === 'admin') {
-            $this->redirect('/PHPLearning/NovaBank/public/admin/dashboard');
+            $this->redirect('/NovaBank/public/admin/dashboard');
         } else {
-            $this->redirect('/PHPLearning/NovaBank/public/client/dashboard');
+            $this->redirect('/NovaBank/public/client/dashboard');
         }
     }
 

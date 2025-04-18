@@ -28,7 +28,8 @@ class ClientController
 
         // Fetch transactions for the client (assuming getByClientId exists in Transaction model)
         $transactions = $this->transactionModel->getByClientId($clientId);
-
+        // Fetch income and expenses
+        $incomeAndExpenses = $this->clientModel->getIncomeAndExpenses($clientId);
         // Fetch profile picture (assuming getProfilePicture exists in Client model)
         $profilePicture = $this->clientModel->getProfilePicture($clientId);
 
@@ -78,7 +79,7 @@ class ClientController
             // Validate inputs
             if (empty($senderAccountId) || empty($recipientAccountId) || empty($amount) || $amount <= 0) {
                 $this->setSessionError("Invalid input. Please try again.");
-                $this->redirect('/PHPLearning/NovaBank/public/client/accounts');
+                $this->redirect('/NovaBank/public/client/accounts');
             }
 
             // Transfer funds
@@ -88,7 +89,7 @@ class ClientController
                 $this->setSessionError("Failed to transfer funds. Please try again.");
             }
 
-            $this->redirect('/PHPLearning/NovaBank/public/client/accounts');
+            $this->redirect('/NovaBank/public/client/accounts');
         }
     }
 
@@ -111,7 +112,7 @@ class ClientController
             // Validate password and confirmation
             if ($password !== null && $password !== $confirmPassword) {
                 $this->setSessionError("Passwords do not match.");
-                $this->redirect('/PHPLearning/NovaBank/public/client/profile');
+                $this->redirect('/NovaBank/public/client/profile');
             }
 
             // Handle profile picture upload
@@ -124,7 +125,7 @@ class ClientController
                 $this->setSessionError("Failed to update profile.");
             }
 
-            $this->redirect('/PHPLearning/NovaBank/public/client/profile');
+            $this->redirect('/NovaBank/public/client/profile');
         }
     }
 
@@ -174,7 +175,7 @@ class ClientController
             // Validate inputs
             if (empty($senderAccountNumber) || empty($recipientAccountNumber) || empty($amount) || $amount <= 0) {
                 $this->setSessionError("Invalid input. Please try again.");
-                $this->redirect('/PHPLearning/NovaBank/public/client/transaction');
+                $this->redirect('/NovaBank/public/client/transaction');
             }
 
             // Fetch sender and recipient account IDs using account numbers
@@ -183,13 +184,13 @@ class ClientController
 
             if (!$senderAccount || !$recipientAccount) {
                 $this->setSessionError("Invalid sender or recipient account number.");
-                $this->redirect('/PHPLearning/NovaBank/public/client/transaction');
+                $this->redirect('/NovaBank/public/client/transaction');
             }
 
             // Ensure the sender account belongs to the logged-in client
             if ($senderAccount['client_id'] !== $_SESSION['user_id']) {
                 $this->setSessionError("You can only transfer from your own accounts.");
-                $this->redirect('/PHPLearning/NovaBank/public/client/transaction');
+                $this->redirect('/NovaBank/public/client/transaction');
             }
 
             // Call the stored procedure to transfer funds
@@ -206,9 +207,9 @@ class ClientController
                 $this->setSessionError("Failed to transfer funds. Please try again.");
             }
 
-            $this->redirect('/PHPLearning/NovaBank/public/client/transaction');
+            $this->redirect('/NovaBank/public/client/transaction');
         } else {
-            $this->redirect('/PHPLearning/NovaBank/public/client/transaction');
+            $this->redirect('/NovaBank/public/client/transaction');
         }
     }
 
@@ -255,12 +256,12 @@ class ClientController
             // Validate inputs
             if (empty($amount) || empty($interestRate) || empty($termMonths) || empty($loanType)) {
                 $this->setSessionError("All fields are required.");
-                $this->redirect('/PHPLearning/NovaBank/public/client/loans');
+                $this->redirect('/NovaBank/public/client/loans');
             }
 
             if ($amount <= 0 || $interestRate <= 0 || $termMonths <= 0) {
                 $this->setSessionError("Amount, interest rate, and term must be greater than zero.");
-                $this->redirect('/PHPLearning/NovaBank/public/client/loans');
+                $this->redirect('/NovaBank/public/client/loans');
             }
 
             // Create the loan request
@@ -270,7 +271,7 @@ class ClientController
                 $this->setSessionError("Failed to submit loan request. Please try again.");
             }
 
-            $this->redirect('/PHPLearning/NovaBank/public/client/loans');
+            $this->redirect('/NovaBank/public/client/loans');
         }
     }
 
@@ -280,7 +281,7 @@ class ClientController
     private function ensureClientLoggedIn()
     {
         if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'client') {
-            $this->redirect('/PHPLearning/NovaBank/public/login');
+            $this->redirect('/NovaBank/public/login');
         }
     }
 
@@ -298,10 +299,10 @@ class ClientController
             }
             $profilePicturePath = $uploadDir . basename($_FILES['profile_picture']['name']);
             if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $profilePicturePath)) {
-                return '/PHPLearning/NovaBank/public/assets/images/profile_pictures/' . basename($_FILES['profile_picture']['name']);
+                return '/NovaBank/public/assets/images/profile_pictures/' . basename($_FILES['profile_picture']['name']);
             } else {
                 $this->setSessionError("Failed to upload profile picture.");
-                $this->redirect('/PHPLearning/NovaBank/public/client/profile');
+                $this->redirect('/NovaBank/public/client/profile');
             }
         }
         return null;

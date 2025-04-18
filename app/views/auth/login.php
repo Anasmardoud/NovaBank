@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Nova Bank</title>
-    <link rel="stylesheet" href="/PHPLearning/NovaBank/public/assets/css/login.css">
-    <link rel="stylesheet" href="/PHPLearning/NovaBank/public/assets/css/global.css">
+    <link rel="stylesheet" href="/NovaBank/public/assets/css/login.css">
+    <link rel="stylesheet" href="/NovaBank/public/assets/css/global.css">
     <!-- Include Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -22,13 +22,13 @@
         <div class="login-grid">
             <!-- Left Column: Image -->
             <div class="login-image">
-                <img src="/PHPLearning/NovaBank/public/assets/images/login-image.jpg" alt="Login Image">
+                <img src="/NovaBank/public/assets/images/login-image.jpg" alt="Login Image">
             </div>
 
             <!-- Right Column: Login Form -->
             <div class="login-form">
                 <h2>Login to Nova Bank</h2>
-                <form action="/PHPLearning/NovaBank/public/login_algorithm" method="POST">
+                <form action="/NovaBank/public/login_algorithm" method="POST">
                     <!-- Account Type Dropdown -->
                     <div class="form-group">
                         <label for="account-type">Choose Your Account Type:</label>
@@ -53,7 +53,6 @@
                                 <i class="eye-icon fas fa-eye-slash"></i> <!-- Default: closed eye -->
                             </span>
                         </div>
-                        <div id="password-strength-message" class="password-strength-message"></div>
                     </div>
 
                     <!-- Login Button -->
@@ -84,9 +83,7 @@
     </div>
 
     <?php include __DIR__ . '/../layouts/footer.php'; ?>
-
-    <script src="/PHPLearning/NovaBank/public/assets/js/global.js"></script>
-    <script src="/PHPLearning/NovaBank/public/assets/js/login.js"></script>
+    <script src="/NovaBank/public/assets/js/login.js"></script>
 </body>
 
 </html>

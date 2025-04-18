@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /PHPLearning/NovaBank/public/
+RewriteBase /NovaBank/public/
 
 # Redirect all requests to index.php
 RewriteCond %{REQUEST_FILENAME} !-f

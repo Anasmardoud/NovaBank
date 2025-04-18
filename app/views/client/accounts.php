@@ -1,7 +1,7 @@
 <?php
 // Check if the user is logged in and is a client
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'client') {
-    header('Location: /PHPLearning/NovaBank/public/login');
+    header('Location: /NovaBank/public/login');
     exit();
 }
 $currentPage = 'accounts';
@@ -13,8 +13,8 @@ $currentPage = 'accounts';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/PHPLearning/NovaBank/public/assets/css/client.css">
-    <link rel="stylesheet" href="/PHPLearning/NovaBank/public/assets/css/global.css">
+    <link rel="stylesheet" href="/NovaBank/public/assets/css/client.css">
+    <link rel="stylesheet" href="/NovaBank/public/assets/css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Client Accounts - Nova Bank</title>
 </head>
@@ -27,22 +27,22 @@ $currentPage = 'accounts';
             <nav>
                 <ul>
                     <li class="<?php echo $currentPage === 'dashboard' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/client/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+                        <a href="/NovaBank/public/client/dashboard"><i class="fas fa-home"></i> Dashboard</a>
                     </li>
                     <li class="<?php echo $currentPage === 'accounts' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/client/accounts"><i class="fas fa-briefcase"></i> Accounts</a>
+                        <a href="/NovaBank/public/client/accounts"><i class="fas fa-briefcase"></i> Accounts</a>
                     </li>
                     <li class="<?php echo $currentPage === 'transaction' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/client/transaction"><i class="fas fa-exchange-alt"></i> Transaction</a>
+                        <a href="/NovaBank/public/client/transaction"><i class="fas fa-exchange-alt"></i> Transaction</a>
                     </li>
                     <li class="<?php echo $currentPage === 'Profile' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/client/profile"><i class="fas fa-user"></i>Profile</a>
+                        <a href="/NovaBank/public/client/profile"><i class="fas fa-user"></i>Profile</a>
                     </li>
                     <li class="<?php echo $currentPage === 'loans' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/client/loans"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+                        <a href="/NovaBank/public/client/loans"><i class="fas fa-hand-holding-usd"></i> Loans</a>
                     </li>
                     <li>
-                        <a href="/PHPLearning/NovaBank/public/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        <a href="/NovaBank/public/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </li>
                 </ul>
             </nav>
@@ -55,7 +55,7 @@ $currentPage = 'accounts';
                     <?php else: ?>
                         <i class="fas fa-user-circle default-profile-picture"></i>
                     <?php endif; ?>
-                    <h1>Accounts OF, <?= htmlspecialchars($_SESSION['username']) ?></h1>
+                    <h1>Accounts of <?= htmlspecialchars($_SESSION['username']) ?></h1>
                 </div>
                 <span class="date">Today: <?= date('F j, Y') ?></span>
             </header>
@@ -90,7 +90,7 @@ $currentPage = 'accounts';
 
                         <div class="nb-transfer-section">
                             <h4>Transfer Funds</h4>
-                            <form class="nb-transfer-form" action="/PHPLearning/NovaBank/public/client/transferFunds" method="POST" required>
+                            <form class="nb-transfer-form" action="/NovaBank/public/client/transferFunds" method="POST" required>
                                 <input type="hidden" name="sender_account_id" value="<?= $account['account_id'] ?>">
                                 <div class="nb-form-group">
                                     <label for="recipient_account_id_<?= $account['account_id'] ?>">Transfer to:</label>

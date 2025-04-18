@@ -1,7 +1,7 @@
 <?php
 // Check if the user is logged in and is an admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: /PHPLearning/NovaBank/public/login');
+    header('Location: /NovaBank/public/login');
     exit();
 }
 
@@ -15,8 +15,8 @@ $currentPage = 'dashboard';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/PHPLearning/NovaBank/public/assets/css/admin.css">
-    <link rel="stylesheet" href="/PHPLearning/NovaBank/public/assets/css/global.css">
+    <link rel="stylesheet" href="/NovaBank/public/assets/css/admin.css">
+    <link rel="stylesheet" href="/NovaBank/public/assets/css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Admin Dashboard</title>
 </head>
@@ -29,22 +29,25 @@ $currentPage = 'dashboard';
             <nav>
                 <ul>
                     <li class="<?php echo $currentPage === 'dashboard' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+                        <a href="/NovaBank/public/admin/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li class="<?php echo $currentPage === 'create_admin' ? 'active' : ''; ?>">
+                        <a href="/NovaBank/public/admin/create-admin"><i class="fas fa-user-plus"></i> Create Admin</a>
                     </li>
                     <li class="<?php echo $currentPage === 'create_client' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/client-creation-homepage"><i class="fas fa-user-plus"></i> Create Client</a>
+                        <a href="/NovaBank/public/admin/client-creation-homepage"><i class="fas fa-user-plus"></i> Create Client</a>
                     </li>
                     <li class="<?php echo $currentPage === 'clients' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/clients"><i class="fas fa-users"></i> Clients</a>
+                        <a href="/NovaBank/public/admin/clients"><i class="fas fa-users"></i> Clients</a>
                     </li>
                     <li class="<?php echo $currentPage === 'deposit' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/deposit"><i class="fas fa-wallet"></i> Deposit</a>
+                        <a href="/NovaBank/public/admin/deposit"><i class="fas fa-wallet"></i> Deposit</a>
                     </li>
                     <li class="<?php echo $currentPage === 'loans' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/loans"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+                        <a href="/NovaBank/public/admin/loans"><i class="fas fa-hand-holding-usd"></i> Loans</a>
                     </li>
                     <li>
-                        <a href="/PHPLearning/NovaBank/public/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        <a href="/NovaBank/public/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </li>
                 </ul>
             </nav>
@@ -98,7 +101,7 @@ $currentPage = 'dashboard';
             <div class="content-section">
                 <div class="dash-border">
                     <h2>Change Password</h2>
-                    <form action="/PHPLearning/NovaBank/public/admin/change-password" method="POST" onsubmit="return validatePassword()">
+                    <form action="/NovaBank/public/admin/change-password" method="POST" onsubmit="return validatePassword()">
                         <div class="form-group">
                             <label for="current-password">Current Password:</label>
                             <div class="password-container">
@@ -155,7 +158,7 @@ $currentPage = 'dashboard';
         <?php endif; ?>
     </div>
 
-    <script src="/PHPLearning/NovaBank/public/assets/js/admin.js"></script>
+    <script src="/NovaBank/public/assets/js/admin.js"></script>
 
     <?php include __DIR__ . '/../layouts/footer.php'; ?>
 </body>

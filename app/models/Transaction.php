@@ -33,7 +33,6 @@ class Transaction
             return [];
         }
     }
-
     /**
      * Transfer funds between accounts using the FundTransfer stored procedure.
      *
@@ -57,7 +56,6 @@ class Transaction
             return false;
         }
     }
-
     /**
      * Generate an account statement using the GenerateAccountStatement stored procedure.
      *
@@ -91,24 +89,73 @@ class Transaction
     public function getByClientId($clientId)
     {
         try {
+            // Validate clientId
+            if (!is_numeric($clientId) || $clientId <= 0) {
+                throw new InvalidArgumentException("Invalid client ID.");
+            }
             // Prepare and execute the query
             $stmt = $this->prepareStatement("
-                SELECT * FROM TRANSACTION
-                WHERE sender_account_id IN (SELECT account_id FROM ACCOUNT WHERE client_id = ?)
-                OR receiver_account_id IN (SELECT account_id FROM ACCOUNT WHERE client_id = ?)
-                ORDER BY created_at DESC
-            ");
+            SELECT 
+                t.transaction_id,
+                t.amount,
+                t.transaction_type,
+                t.created_at,
+                sa.client_id AS sender_client_id,
+                ra.client_id AS receiver_client_id,
+                sa.account_number AS sender_account_number,
+                ra.account_number AS receiver_account_number,
+                sa.account_type AS sender_account_type,
+                ra.account_type AS receiver_account_type,
+                sc.username AS sender_username,
+                rc.username AS receiver_username
+            FROM TRANSACTION t
+            LEFT JOIN ACCOUNT sa ON t.sender_account_id = sa.account_id
+            LEFT JOIN ACCOUNT ra ON t.receiver_account_id = ra.account_id
+            LEFT JOIN CLIENT sc ON sa.client_id = sc.client_id
+            LEFT JOIN CLIENT rc ON ra.client_id = rc.client_id
+            WHERE sa.client_id = ? OR ra.client_id = ?
+            ORDER BY t.created_at DESC
+        ");
             $stmt->bind_param("ii", $clientId, $clientId);
             $this->executeStatement($stmt);
 
             // Fetch the result
-            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            $result = $stmt->get_result();
+
+            // Check if there are any transactions
+            if ($result->num_rows === 0) {
+                error_log("No transactions found for client ID: " . $clientId);
+                return [];
+            }
+
+            // Fetch all transactions as an associative array
+            $transactions = $result->fetch_all(MYSQLI_ASSOC);
+
+            // Format the transactions array
+            $formattedTransactions = [];
+            foreach ($transactions as $transaction) {
+                $formattedTransactions[] = [
+                    'transaction_id' => $transaction['transaction_id'],
+                    'amount' => $transaction['amount'],
+                    'transaction_type' => $transaction['transaction_type'],
+                    'created_at' => $transaction['created_at'],
+                    'sender' => $transaction['sender_account_number'] ?? 'N/A',
+                    'receiver' => $transaction['receiver_account_number'] ?? 'N/A',
+                    'sender_client_id' => $transaction['sender_client_id'] ?? 'N/A',
+                    'receiver_client_id' => $transaction['receiver_client_id'] ?? 'N/A',
+                    'sender_account_type' => $transaction['sender_account_type'] ?? 'N/A',
+                    'receiver_account_type' => $transaction['receiver_account_type'] ?? 'N/A',
+                    'sender_username' => $transaction['sender_username'] ?? 'N/A',
+                    'receiver_username' => $transaction['receiver_username'] ?? 'N/A',
+                ];
+            }
+
+            return $formattedTransactions;
         } catch (Exception $e) {
             error_log("Failed to fetch transactions by client ID: " . $e->getMessage(), 0);
             return [];
         }
     }
-
     /**
      * Fetch a transaction by its ID.
      *

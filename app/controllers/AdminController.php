@@ -14,7 +14,7 @@ class AdminController
     /**
      * Constructor to initialize models.
      */
-    public function __construct()
+    public function  __construct()
     {
         $this->clientModel = new Client();
         $this->loanModel = new Loan();
@@ -32,6 +32,56 @@ class AdminController
     }
 
     /**
+     * Render the create admin page.
+     */
+    public function createAdminPage()
+    {
+        $currentPage = 'create_admin';
+        include __DIR__ . '/../views/admin/create_admin.php';
+    }
+    /**
+     * Create Admin Algo.
+     */
+
+    public function createAdmin()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = htmlspecialchars($_POST['username']);
+            $password = htmlspecialchars($_POST['password']);
+            $confirmPassword = htmlspecialchars($_POST['confirm_password']);
+
+            // Validate inputs
+            if (empty($username) || empty($password) || empty($confirmPassword)) {
+                $_SESSION['error'] = 'All fields are required.';
+                header('Location: /NovaBank/public/admin/create-admin');
+                exit();
+            }
+
+            if ($password !== $confirmPassword) {
+                $_SESSION['error'] = 'Passwords do not match.';
+                header('Location: /NovaBank/public/admin/create-admin');
+                exit();
+            }
+
+            // Hash the password
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            // Create the admin
+            if ($this->adminModel->create($username, $hashedPassword)) {
+                $_SESSION['success'] = 'Admin created successfully.';
+            } else {
+                $_SESSION['error'] = 'Failed to create admin.';
+            }
+
+            header('Location: /NovaBank/public/admin/create-admin');
+            exit();
+        }
+
+        // Render the create admin page
+        $currentPage = 'create_admin';
+        include __DIR__ . '/../views/admin/create_admin.php';
+    }
+    /**
      * Handle password change for the admin.
      */
     public function changePassword()
@@ -47,13 +97,13 @@ class AdminController
 
             if (!$admin || !password_verify($currentPassword, $admin['password'])) {
                 $this->setSessionError('Current password is incorrect.');
-                $this->redirect('/PHPLearning/NovaBank/public/admin/dashboard');
+                $this->redirect('/NovaBank/public/admin/dashboard');
             }
 
             // Validate the new password
             if ($newPassword !== $confirmPassword) {
                 $this->setSessionError('New password and confirmation do not match.');
-                $this->redirect('/PHPLearning/NovaBank/public/admin/dashboard');
+                $this->redirect('/NovaBank/public/admin/dashboard');
             }
 
             // Update the password
@@ -64,7 +114,7 @@ class AdminController
                 $this->setSessionError('Failed to change password.');
             }
 
-            $this->redirect('/PHPLearning/NovaBank/public/admin/dashboard');
+            $this->redirect('/NovaBank/public/admin/dashboard');
         }
     }
 
@@ -98,7 +148,7 @@ class AdminController
 
             if (!$addChecking && !$addSavings) {
                 $this->setSessionError('Please select at least one account type.');
-                $this->redirect('/PHPLearning/NovaBank/public/admin/client-creation-homepage');
+                $this->redirect('/NovaBank/public/admin/client-creation-homepage');
             }
 
             // Validate balances
@@ -107,12 +157,12 @@ class AdminController
 
             if ($addChecking && $checkingBalance <= 0) {
                 $this->setSessionError('Checking account balance must be greater than 0.');
-                $this->redirect('/PHPLearning/NovaBank/public/admin/client-creation-homepage');
+                $this->redirect('/NovaBank/public/admin/client-creation-homepage');
             }
 
             if ($addSavings && $savingsBalance <= 0) {
                 $this->setSessionError('Savings account balance must be greater than 0.');
-                $this->redirect('/PHPLearning/NovaBank/public/admin/client-creation-homepage');
+                $this->redirect('/NovaBank/public/admin/client-creation-homepage');
             }
 
             // Create client and accounts
@@ -122,7 +172,7 @@ class AdminController
                 $this->setSessionError('Failed to create client and accounts.');
             }
 
-            $this->redirect('/PHPLearning/NovaBank/public/admin/client-creation-homepage');
+            $this->redirect('/NovaBank/public/admin/client-creation-homepage');
         }
     }
 
@@ -157,7 +207,7 @@ class AdminController
                 $this->setSessionError("Failed to update client $username.");
             }
 
-            $this->redirect('/PHPLearning/NovaBank/public/admin/clients');
+            $this->redirect('/NovaBank/public/admin/clients');
         }
     }
 
@@ -171,7 +221,7 @@ class AdminController
 
             if (!is_numeric($clientId)) {
                 $this->setSessionError('Invalid client ID.');
-                $this->redirect('/PHPLearning/NovaBank/public/admin/clients');
+                $this->redirect('/NovaBank/public/admin/clients');
             }
 
             if ($this->clientModel->delete($clientId)) {
@@ -180,7 +230,7 @@ class AdminController
                 $this->setSessionError('Failed to delete client.');
             }
 
-            $this->redirect('/PHPLearning/NovaBank/public/admin/clients');
+            $this->redirect('/NovaBank/public/admin/clients');
         }
     }
 
@@ -207,7 +257,7 @@ class AdminController
             // Validate input
             if (!is_numeric($accountId) || !is_numeric($amount) || $amount <= 0) {
                 $this->setSessionError('Invalid input. Please check the account ID and amount.');
-                $this->redirect('/PHPLearning/NovaBank/public/admin/deposit');
+                $this->redirect('/NovaBank/public/admin/deposit');
             }
 
             // Create the deposit
@@ -218,11 +268,28 @@ class AdminController
             } else {
                 $this->setSessionError($statusMessage);
             }
-
-            $this->redirect('/PHPLearning/NovaBank/public/admin/deposit');
+            $this->redirect('/NovaBank/public/admin/deposit');
         }
     }
 
+
+    public function editDeposit()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $depositId = $_POST['deposit_id'];
+
+            // Fetch deposit details for editing
+            $deposit = $this->depositModel->getDepositById($depositId);
+            if ($deposit) {
+                // Load the edit deposit view with deposit data
+                include __DIR__ . '/../views/admin/edit_deposit.php';
+            } else {
+                $this->setSessionError('Deposit not found.');
+                $this->redirect('/NovaBank/public/admin/deposit');
+                exit();
+            }
+        }
+    }
     /**
      * Handle deposit deletion.
      */
@@ -237,7 +304,7 @@ class AdminController
                 $this->setSessionError('Failed to delete deposit.');
             }
 
-            $this->redirect('/PHPLearning/NovaBank/public/admin/deposit');
+            $this->redirect('/NovaBank/public/admin/deposit');
         }
     }
 
@@ -254,7 +321,7 @@ class AdminController
             // Validate input
             if (!is_numeric($amount) || $amount <= 0) {
                 $this->setSessionError('Invalid amount. Amount must be greater than 0.');
-                $this->redirect('/PHPLearning/NovaBank/public/admin/deposit');
+                $this->redirect('/NovaBank/public/admin/deposit');
             }
 
             // Update the deposit
@@ -264,7 +331,7 @@ class AdminController
                 $this->setSessionError('Failed to update deposit.');
             }
 
-            $this->redirect('/PHPLearning/NovaBank/public/admin/deposit');
+            $this->redirect('/NovaBank/public/admin/deposit');
         }
     }
 
@@ -302,7 +369,7 @@ class AdminController
                 $this->setSessionError('Failed to approve loan.');
             }
 
-            $this->redirect('/PHPLearning/NovaBank/public/admin/loans');
+            $this->redirect('/NovaBank/public/admin/loans');
         }
     }
 
@@ -320,7 +387,7 @@ class AdminController
                 $this->setSessionError('Failed to reject loan.');
             }
 
-            $this->redirect('/PHPLearning/NovaBank/public/admin/loans');
+            $this->redirect('/NovaBank/public/admin/loans');
         }
     }
 
@@ -337,7 +404,7 @@ class AdminController
 
             if (!$loanId || !$amount || !$interestRate || !$termMonths) {
                 $this->setSessionError('All fields are required.');
-                $this->redirect('/PHPLearning/NovaBank/public/admin/loans');
+                $this->redirect('/NovaBank/public/admin/loans');
             }
 
             // Update and calculate loan
@@ -347,7 +414,7 @@ class AdminController
                 $this->setSessionError('Failed to update and calculate loan.');
             }
 
-            $this->redirect('/PHPLearning/NovaBank/public/admin/loans');
+            $this->redirect('/NovaBank/public/admin/loans');
         }
     }
 
@@ -360,14 +427,14 @@ class AdminController
 
         if (!$loanId) {
             $this->setSessionError('Loan ID is required.');
-            $this->redirect('/PHPLearning/NovaBank/public/admin/loans');
+            $this->redirect('/NovaBank/public/admin/loans');
         }
 
         $loan = $this->loanModel->getLoanById($loanId);
 
         if (!$loan) {
             $this->setSessionError('Loan not found.');
-            $this->redirect('/PHPLearning/NovaBank/public/admin/loans');
+            $this->redirect('/NovaBank/public/admin/loans');
         }
 
         include __DIR__ . '/../views/admin/calculate_loan.php';
@@ -387,7 +454,7 @@ class AdminController
                 $this->setSessionError('Failed to delete loan.');
             }
 
-            $this->redirect('/PHPLearning/NovaBank/public/admin/loans');
+            $this->redirect('/NovaBank/public/admin/loans');
         }
     }
 

@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova Bank - Home</title>
-    <link rel="stylesheet" href="/PHPLearning/NovaBank/public/assets/css/global.css">
-    <link rel="stylesheet" href="/PHPLearning/NovaBank/public/assets/css/home.css">
+    <link rel="stylesheet" href="/NovaBank/public/assets/css/global.css">
+    <link rel="stylesheet" href="/NovaBank/public/assets/css/home.css">
     <!-- Include Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -30,12 +30,12 @@
                         <li><i class="fas fa-check-circle"></i> Fast Loan Approvals</li>
                     </ul>
                     <p class="cta-text">Join thousands of satisfied customers today!</p>
-                    <a href="/PHPLearning/NovaBank/public/login_page" class="cta-button">Get Started</a>
+                    <a href="/NovaBank/public/login_page" class="cta-button">Get Started</a>
                 </div>
 
                 <!-- Right Section: Image -->
                 <div class="hero-right">
-                    <img src="/PHPLearning/NovaBank/public/assets/images/bank-left-image.jpg" alt="Bank Image">
+                    <img src="/NovaBank/public/assets/images/bank-left-image.jpg" alt="Bank Image">
                 </div>
             </div>
         </section>
@@ -44,8 +44,8 @@
     <!-- Footer Section -->
     <?php include __DIR__ . '/layouts/footer.php'; ?>
 
-    <script src="/PHPLearning/NovaBank/public/assets/js/global.js"></script>
-    <script src="/PHPLearning/NovaBank/public/assets/js/home.js"></script>
+    <script src="/NovaBank/public/assets/js/global.js"></script>
+    <script src="/NovaBank/public/assets/js/home.js"></script>
 </body>
 
 </html>

@@ -2,12 +2,12 @@
 /* DBMS name:               MYSQL                               */
 /* Created on:              1/13/2025                           */
 /*==============================================================*/
-
+------------------------------------------------------------------
 /*          Triggers for Nova Bank                               */
-
-DELIMITER $$
+------------------------------------------------------------------
 
 -- Trigger for INSERT on ACCOUNT
+DELIMITER $$
 CREATE TRIGGER ti_account
 BEFORE INSERT ON ACCOUNT
 FOR EACH ROW
@@ -30,7 +30,7 @@ BEGIN
         SET MESSAGE_TEXT = 'Parent CLIENT does not exist. Cannot modify child in ACCOUNT.';
     END IF;
 END$$
-
+----------------------------------------------------------------
 -- Trigger for INSERT on CLIENT
 CREATE TRIGGER ti_client
 BEFORE INSERT ON CLIENT
@@ -54,7 +54,7 @@ BEGIN
         SET MESSAGE_TEXT = 'Parent ADMIN does not exist. Cannot modify child in CLIENT.';
     END IF;
 END$$
-
+----------------------------------------------------------------
 -- Trigger for INSERT on IMAGE
 CREATE TRIGGER ti_image
 BEFORE INSERT ON IMAGE
@@ -78,7 +78,7 @@ BEGIN
         SET MESSAGE_TEXT = 'Parent CLIENT does not exist. Cannot modify child in IMAGE.';
     END IF;
 END$$
-
+------------------------------------------------------------------------------------------------
 -- Trigger for INSERT on LOAN
 CREATE TRIGGER ti_loan
 BEFORE INSERT ON LOAN
@@ -114,31 +114,7 @@ BEGIN
         SET MESSAGE_TEXT = 'Parent ADMIN does not exist. Cannot modify child in LOAN.';
     END IF;
 END$$
-
--- Trigger for INSERT on NOTIFICATION
-CREATE TRIGGER ti_notification
-BEFORE INSERT ON NOTIFICATION
-FOR EACH ROW
-BEGIN
-    -- Parent CLIENT must exist when inserting into NOTIFICATION
-    IF NOT EXISTS (SELECT 1 FROM CLIENT WHERE client_id = NEW.client_id) THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Parent does not exist in CLIENT. Cannot create child in NOTIFICATION.';
-    END IF;
-END$$
-
--- Trigger for UPDATE on NOTIFICATION
-CREATE TRIGGER tu_notification
-BEFORE UPDATE ON NOTIFICATION
-FOR EACH ROW
-BEGIN
-    -- Parent CLIENT must exist when updating NOTIFICATION
-    IF NEW.client_id IS NOT NULL AND NOT EXISTS (SELECT 1 FROM CLIENT WHERE client_id = NEW.client_id) THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Parent CLIENT does not exist. Cannot modify child in NOTIFICATION.';
-    END IF;
-END$$
-
+-------------------------------------------------------------------------------------------------------------
 -- Trigger for INSERT on TRANSACTION
 CREATE TRIGGER ti_transaction
 BEFORE INSERT ON TRANSACTION
@@ -164,12 +140,9 @@ BEGIN
 END$$
 
 DELIMITER ;
-
-
----Trigger for deposit 
-
-DELIMITER //
-
+-------------------------------------------------------------------------------------
+-- Trigger for INSERT on DEPOSIT
+DELIMITER $$
 CREATE TRIGGER before_deposit_insert
 BEFORE INSERT ON DEPOSIT
 FOR EACH ROW
@@ -192,6 +165,5 @@ BEGIN
         SET MESSAGE_TEXT = 'Deposit amount must be greater than zero.';
     END IF;
 END;
-//
-
 DELIMITER ;
+----------------------------------------------------------------------------------------------------

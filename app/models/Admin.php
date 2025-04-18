@@ -37,9 +37,8 @@ class Admin
      * @param string $password The password of the admin.
      * @return bool True if the admin was created successfully, false otherwise.
      */
-    public function create($username, $password)
+    public function create($username, $hashedPassword)
     {
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $this->conn->prepare("INSERT INTO Admin (username, password, created_at) VALUES (?, ?, NOW())");
         $stmt->bind_param("ss", $username, $hashedPassword);
         return $stmt->execute();

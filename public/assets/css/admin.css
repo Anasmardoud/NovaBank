@@ -80,8 +80,8 @@
   margin-bottom: 2rem;
   padding: 1rem;
   background-color: #ffffff;
-  border-radius: 10px; /* Add border radius */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .header h1 {
@@ -93,23 +93,6 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #555;
-}
-
-.user-info i {
-  font-size: 1.5rem;
-}
-
-.header h1 {
-  font-size: 2rem;
-  color: #28a745;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-right: 10px;
   color: #095607;
 }
 
@@ -152,11 +135,16 @@
   display: block;
   font-size: 0.9rem;
   margin-bottom: 0.25rem;
-  color: rgb(52, 50, 50);
+  color: #555;
 }
 
-.form-group input[type="password"] {
-  width: 100%;
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="number"],
+.form-group textarea,
+.form-group select {
+  width: 98%;
   padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid #ddd;
@@ -165,8 +153,10 @@
   transition: border-color 0.3s ease;
 }
 
-.form-group input[type="password"]:focus {
-  border-color: #28a745; /* Green theme */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #28a745;
 }
 
 /* Password Container */
@@ -202,7 +192,8 @@
 .btn:hover {
   background-color: #218838; /* Darker green on hover */
 }
-/* Password Strength Message Styles */
+
+/* Password Strength Message */
 .password-strength-message {
   margin-top: 0.5rem;
   font-size: 0.9rem;
@@ -219,91 +210,6 @@
 
 .password-strength-message.strong {
   color: #008000; /* Green for strong */
-}
-/* Form Styles */
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  font-size: 0.9rem;
-  margin-bottom: 0.25rem;
-  color: #555;
-}
-
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"],
-.form-group textarea,
-.form-group select {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.form-group input[type="text"]:focus,
-.form-group input[type="email"]:focus,
-.form-group input[type="password"]:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-  border-color: #28a745; /* Green theme */
-}
-
-/* Password Container */
-.password-container {
-  position: relative;
-}
-
-.toggle-password {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #555;
-}
-
-.toggle-password:hover {
-  color: #28a745; /* Green theme */
-}
-
-/* Buttons */
-.btn {
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  color: white;
-  background-color: #28a745; /* Green theme */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-  background-color: #218838; /* Darker green on hover */
-}
-
-/* Slide-in Animation */
-@keyframes slideIn {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-/* Add Accounts Section Styling */
-.form-group label {
-  display: block;
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-  color: #555;
-  font-weight: bold;
 }
 
 /* Checkbox and Label Styling */
@@ -337,107 +243,88 @@
   color: #555;
 }
 
-#checking_balance_group input[type="number"],
-#savings_balance_group input[type="number"] {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-#checking_balance_group input[type="number"]:focus,
-#savings_balance_group input[type="number"]:focus {
-  border-color: #28a745; /* Green theme */
-}
 /* Clients Table Styling */
-.clients-table {
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px; /* Smaller padding */
+  font-size: 12px; /* Smaller font size */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+  color: white; /* Ensure text is visible */
+}
+.clients-table,
+.loans-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
 }
 
 .clients-table th,
-.clients-table td {
-  padding: 0.75rem;
+.clients-table td,
+.loans-table th,
+.loans-table td {
+  padding: 0.25rem;
   border: 1px solid #ddd;
   text-align: left;
 }
 
-.clients-table th {
-  background-color: #28a745; /* Green theme */
+.clients-table th,
+.loans-table th {
+  background-color: #28a745;
   color: white;
 }
 
-.clients-table tr:nth-child(even) {
+.clients-table tr:nth-child(even),
+.loans-table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-.clients-table tr:hover {
+.clients-table tr:hover,
+.loans-table tr:hover {
   background-color: #f1f1f1;
 }
+
+/* Action Buttons */
 .actions-container-edit,
 .actions-container {
   display: flex;
-  gap: 8px; /* Space between buttons */
+  gap: 8px;
   align-items: center;
   justify-content: flex-start;
-  flex-wrap: wrap; /* Allow buttons to wrap to the next line if needed */
+  flex-wrap: wrap;
 }
 
-/* Styles for buttons inside action containers */
 .actions-container-edit .btn,
 .actions-container .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 8px 12px;
-  border: none;
+  border: gainsboro 1px solid;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* Hover effect for buttons */
 .actions-container-edit .btn:hover,
 .actions-container .btn:hover {
   transform: translateY(-1px);
 }
 
-/* Action Buttons */
-/* General Button Styles */
-.btn {
-  display: inline-block;
-  padding: 8px 12px;
-  font-size: 12px;
-  font-weight: 500;
-  text-align: center;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  text-decoration: none;
-  color: white;
-  margin: 0.5px;
-}
-
-/* Approve Button */
 .btn-edit {
-  background-color: #ffb62e; /* Green */
+  background-color: #ffb62e; /* Yellow */
 }
 
 .btn-edit:hover {
-  background-color: #ffce3b; /* Darker Green */
+  background-color: #ffce3b; /* Darker Yellow */
 }
 
-.btn-edit:active {
-  transform: scale(0.95);
-}
-
-/* Reject Button */
 .btn-delete {
   background-color: #dc3545; /* Red */
 }
@@ -446,52 +333,28 @@
   background-color: #c82333; /* Darker Red */
 }
 
-.btn-delete:active {
-  transform: scale(0.95);
-}
-
-/* Calculate Button */
 .btn-calculate {
-  background-color: #3aac15;
+  background-color: #3aac15; /* Green */
 }
 
 .btn-calculate:hover {
-  background-color: #22ed5c;
+  background-color: #22ed5c; /* Darker Green */
 }
 
-.btn-calculate:active {
-  transform: scale(0.95);
-}
-
-/* Disabled button styles */
-.btn-edit:disabled,
-.btn-delete:disabled {
+.btn:disabled {
   background-color: #cccccc; /* Gray */
   cursor: not-allowed;
   opacity: 0.7;
 }
 
-/* Icon styles */
 .actions-container-edit .btn i,
 .actions-container .btn i {
-  margin-right: 5px; /* Space between icon and text */
+  margin-right: 5px;
 }
-
-/* Button Container */
-.actions-container {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-}
-@media (max-width: 768px) {
-  .clients-table th:nth-child(2), /* Interest Rate */
-    .clients-table td:nth-child(4),
-    .clients-table th:nth-child(9), /* Message */
-    .clients-table td:nth-child(9),
-    .clients-table th:nth-child(10), /* Total Insert */
-    .clients-table td:nth-child(10) {
-    display: none;
-  }
+/* Inline Form for Delete Button */
+.inline-form {
+  display: inline-block;
+  margin: 0;
 }
 /* Modal Styling */
 .modal {
@@ -533,180 +396,28 @@
   color: #28a745; /* Green theme */
 }
 
-.modal .form-group {
-  margin-bottom: 1rem;
-}
-
-.modal .form-group label {
-  display: block;
-  font-size: 0.9rem;
-  margin-bottom: 0.25rem;
-  color: #555;
-}
-
-.modal .form-group input[type="text"],
-.modal .form-group input[type="email"],
-.modal .form-group input[type="number"],
-.modal .form-group textarea,
-.modal .form-group select {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.modal .form-group input[type="text"]:focus,
-.modal .form-group input[type="email"]:focus,
-.modal .form-group input[type="number"]:focus,
-.modal .form-group textarea:focus,
-.modal .form-group select:focus {
-  border-color: #28a745; /* Green theme */
-}
-
-.modal .btn {
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  color: white;
-  background-color: #28a745; /* Green theme */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.modal .btn:hover {
-  background-color: #218838; /* Darker green */
-}
-/* Create Deposit Form Styles */
-.create-deposit-form {
-  background-color: #ffffff;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
-}
-
-.create-deposit-form h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: #28a745; /* Green theme */
-}
-
-.create-deposit-form .form-group {
-  margin-bottom: 1rem;
-}
-
-.create-deposit-form label {
-  display: block;
-  font-size: 0.9rem;
-  margin-bottom: 0.25rem;
-  color: #555;
-}
-
-.create-deposit-form input[type="number"] {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.create-deposit-form input[type="number"]:focus {
-  border-color: #28a745; /* Green theme */
-}
-
-.create-deposit-form button[type="submit"] {
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  color: white;
-  background-color: #28a745; /* Green theme */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.create-deposit-form button[type="submit"]:hover {
-  background-color: #218838; /* Darker green on hover */
-}
-/* Edit Deposit Form Styles */
+/* Create and Edit Deposit Form Styles */
+.create-deposit-form,
 .edit-deposit-form {
   background-color: #ffffff;
   padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
+  width: 100%; /* Ensure forms take full width */
 }
 
+.create-deposit-form h2,
 .edit-deposit-form h2 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
   color: #28a745; /* Green theme */
 }
 
-.edit-deposit-form .form-group {
-  margin-bottom: 1rem;
-}
-
-.edit-deposit-form label {
-  display: block;
-  font-size: 0.9rem;
-  margin-bottom: 0.25rem;
-  color: #555;
-}
-
-.edit-deposit-form input[type="number"],
-.edit-deposit-form select {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.edit-deposit-form input[type="number"]:focus,
-.edit-deposit-form select:focus {
-  border-color: #28a745; /* Green theme */
-}
-
-.edit-deposit-form button[type="submit"] {
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  color: white;
-  background-color: #28a745; /* Green theme */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.edit-deposit-form button[type="submit"]:hover {
-  background-color: #218838; /* Darker green on hover */
-}
-/* Dropdown Styles */
-.create-deposit-form select {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.create-deposit-form select:focus {
-  border-color: #28a745; /* Green theme */
-}
-/*loan calculation*/
+/* Loan Calculation Form */
 form {
-  max-width: 500px;
+  max-width: 95%;
+  width: 90%;
   margin: 20px auto;
   padding: 20px;
   background: #ffffff;
@@ -715,15 +426,15 @@ form {
   font-family: Arial, sans-serif;
 }
 
-label {
+form label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
   color: #333;
 }
 
-input[type="number"] {
-  width: 100%;
+form input[type="number"] {
+  width: 90%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -732,12 +443,12 @@ input[type="number"] {
   transition: border 0.3s ease-in-out;
 }
 
-input[type="number"]:focus {
-  border-color: #007bff;
+form input[type="number"]:focus {
+  border-color: #89ff3f;
   outline: none;
 }
 
-span {
+form span {
   display: block;
   padding: 10px;
   background: #f8f9fa;
@@ -746,29 +457,15 @@ span {
   margin-bottom: 15px;
   color: #555;
 }
-/* Loan Table Styles */
-.loans-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
 
-.loans-table th,
-.loans-table td {
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  text-align: left;
-}
-
-.loans-table th {
-  background-color: #28a745;
-  color: white;
-}
-
-.loans-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.loans-table tr:hover {
-  background-color: #f1f1f1;
+/* Responsive Table */
+@media (max-width: 768px) {
+  .clients-table th:nth-child(2),
+  .clients-table td:nth-child(4),
+  .clients-table th:nth-child(9),
+  .clients-table td:nth-child(9),
+  .clients-table th:nth-child(10),
+  .clients-table td:nth-child(10) {
+    display: none;
+  }
 }

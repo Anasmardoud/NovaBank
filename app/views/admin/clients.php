@@ -1,7 +1,7 @@
 <?php
 // Check if the user is logged in and is an admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: /PHPLearning/NovaBank/public/login');
+    header('Location: /NovaBank/public/login');
     exit();
 }
 
@@ -15,8 +15,8 @@ $currentPage = 'clients';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/PHPLearning/NovaBank/public/assets/css/admin.css">
-    <link rel="stylesheet" href="/PHPLearning/NovaBank/public/assets/css/global.css">
+    <link rel="stylesheet" href="/NovaBank/public/assets/css/admin.css">
+    <link rel="stylesheet" href="/NovaBank/public/assets/css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Clients - Nova Bank</title>
 </head>
@@ -29,22 +29,25 @@ $currentPage = 'clients';
             <nav>
                 <ul>
                     <li class="<?php echo $currentPage === 'dashboard' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+                        <a href="/NovaBank/public/admin/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li class="<?php echo $currentPage === 'create_admin' ? 'active' : ''; ?>">
+                        <a href="/NovaBank/public/admin/create-admin"><i class="fas fa-user-plus"></i> Create Admin</a>
                     </li>
                     <li class="<?php echo $currentPage === 'create_account' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/client-creation-homepage"><i class="fas fa-user-plus"></i> Create Account</a>
+                        <a href="/NovaBank/public/admin/client-creation-homepage"><i class="fas fa-user-plus"></i> Create Account</a>
                     </li>
                     <li class="<?php echo $currentPage === 'clients' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/clients"><i class="fas fa-users"></i> Clients</a>
+                        <a href="/NovaBank/public/admin/clients"><i class="fas fa-users"></i> Clients</a>
                     </li>
                     <li class="<?php echo $currentPage === 'deposit' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/deposit"><i class="fas fa-wallet"></i> Deposit</a>
+                        <a href="/NovaBank/public/admin/deposit"><i class="fas fa-wallet"></i> Deposit</a>
                     </li>
                     <li class="<?php echo $currentPage === 'loans' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/loans"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+                        <a href="/NovaBank/public/admin/loans"><i class="fas fa-hand-holding-usd"></i> Loans</a>
                     </li>
                     <li>
-                        <a href="/PHPLearning/NovaBank/public/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        <a href="/NovaBank/public/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </li>
                 </ul>
             </nav>
@@ -87,23 +90,35 @@ $currentPage = 'clients';
                                         <?= $this->clientModel->getFormattedAccounts($client['client_id']) ?>
                                     </td>
                                     <td>
-                                        <button onclick="openEditClientModal(
-                                            '<?= $client['client_id'] ?>',
-                                            '<?= htmlspecialchars($client['username']) ?>',
-                                            '<?= htmlspecialchars($client['email']) ?>',
-                                            '<?= htmlspecialchars($client['phone_number']) ?>',
-                                            '<?= htmlspecialchars($client['address']) ?>',
-                                            '<?= htmlspecialchars($client['status']) ?>',
-                                            '<?= $client['checking_balance'] ?? 0 ?>', 
-                                            '<?= $client['savings_balance'] ?? 0 ?>'  
-                                        )" class="btn btn-edit">
-                                            <i class="fas fa-edit"></i> Edit
-                                            <form action="/PHPLearning/NovaBank/public/admin/delete-client" method="POST" onsubmit="return confirm('Are you sure you want to delete this client?');">
+                                        <div class="actions-container">
+                                            <!-- Edit Button -->
+                                            <button
+                                                onclick="openEditClientModal(
+'<?= $client['client_id'] ?>',
+'<?= htmlspecialchars($client['username']) ?>',
+'<?= htmlspecialchars($client['email']) ?>',
+'<?= htmlspecialchars($client['phone_number']) ?>',
+'<?= htmlspecialchars($client['address']) ?>',
+'<?= htmlspecialchars($client['status']) ?>',
+'<?= $client['checking_balance'] ?? 0 ?>', 
+'<?= $client['savings_balance'] ?? 0 ?>'
+)"
+                                                class="btn btn-edit">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
+
+                                            <!-- Delete Button -->
+                                            <form
+                                                action="/NovaBank/public/admin/delete-client"
+                                                method="POST"
+                                                onsubmit="return confirm('Are you sure you want to delete this client?');"
+                                                class="inline-form">
                                                 <input type="hidden" name="client_id" value="<?= $client['client_id'] ?>">
                                                 <button type="submit" class="btn btn-delete">
                                                     <i class="fas fa-trash"></i> Delete
                                                 </button>
                                             </form>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -117,7 +132,7 @@ $currentPage = 'clients';
         <div class="modal-content">
             <span class="close-modal" onclick="closeEditClientModal()">&times;</span>
             <h2>Edit Client</h2>
-            <form action="/PHPLearning/NovaBank/public/admin/edit-account" method="POST">
+            <form action="/NovaBank/public/admin/edit-account" method="POST">
                 <!-- Hidden field for client ID -->
                 <input type="hidden" id="edit_client_id" name="client_id">
 
@@ -192,7 +207,7 @@ $currentPage = 'clients';
         <?php endif; ?>
     </div>
 
-    <script src="/PHPLearning/NovaBank/public/assets/js/admin.js"></script>
+    <script src="/NovaBank/public/assets/js/admin.js"></script>
 
 </body>
 

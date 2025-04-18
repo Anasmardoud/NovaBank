@@ -1,7 +1,7 @@
 <?php
 // Check if the user is logged in and is an admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: /PHPLearning/NovaBank/public/login');
+    header('Location: /NovaBank/public/login');
     exit();
 }
 
@@ -32,8 +32,8 @@ $paginatedLoans = array_slice($allLoans, $offset, $limit);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/PHPLearning/NovaBank/public/assets/css/admin.css">
-    <link rel="stylesheet" href="/PHPLearning/NovaBank/public/assets/css/global.css">
+    <link rel="stylesheet" href="/NovaBank/public/assets/css/admin.css">
+    <link rel="stylesheet" href="/NovaBank/public/assets/css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Loan Management - Nova Bank</title>
 </head>
@@ -46,22 +46,25 @@ $paginatedLoans = array_slice($allLoans, $offset, $limit);
             <nav>
                 <ul>
                     <li class="<?php echo $currentPage === 'dashboard' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+                        <a href="/NovaBank/public/admin/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li class="<?php echo $currentPage === 'create_admin' ? 'active' : ''; ?>">
+                        <a href="/NovaBank/public/admin/create-admin"><i class="fas fa-user-plus"></i> Create Admin</a>
                     </li>
                     <li class="<?php echo $currentPage === 'create_account' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/client-creation-homepage"><i class="fas fa-user-plus"></i> Create Account</a>
+                        <a href="/NovaBank/public/admin/client-creation-homepage"><i class="fas fa-user-plus"></i> Create Account</a>
                     </li>
                     <li class="<?php echo $currentPage === 'clients' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/clients"><i class="fas fa-users"></i> Clients</a>
+                        <a href="/NovaBank/public/admin/clients"><i class="fas fa-users"></i> Clients</a>
                     </li>
                     <li class="<?php echo $currentPage === 'deposit' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/deposit"><i class="fas fa-wallet"></i> Deposit</a>
+                        <a href="/NovaBank/public/admin/deposit"><i class="fas fa-wallet"></i> Deposit</a>
                     </li>
                     <li class="<?php echo $currentPage === 'loans' ? 'active' : ''; ?>">
-                        <a href="/PHPLearning/NovaBank/public/admin/loans"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+                        <a href="/NovaBank/public/admin/loans"><i class="fas fa-hand-holding-usd"></i> Loans</a>
                     </li>
                     <li>
-                        <a href="/PHPLearning/NovaBank/public/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        <a href="/NovaBank/public/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </li>
                 </ul>
             </nav>
@@ -116,10 +119,10 @@ $paginatedLoans = array_slice($allLoans, $offset, $limit);
                                         <td><?= htmlspecialchars($loan['end_date'] ?? '--') ?></td>
                                         <!-- Column for Calculate and Delete -->
                                         <td class="actions-container-edit">
-                                            <a href="/PHPLearning/NovaBank/public/admin/calculate-loan-page?loan_id=<?= $loan['loan_id'] ?>" class="btn btn-calculate">
+                                            <a href="/NovaBank/public/admin/calculate-loan-page?loan_id=<?= $loan['loan_id'] ?>" class="btn btn-calculate">
                                                 <i class="fas fa-calculator"></i> Calculate
                                             </a>
-                                            <form action="/PHPLearning/NovaBank/public/admin/delete-loan" method="POST" onsubmit="return confirm('Are you sure you want to delete this loan?');" style="display: inline;">
+                                            <form action="/NovaBank/public/admin/delete-loan" method="POST" onsubmit="return confirm('Are you sure you want to delete this loan?');" style="display: inline;">
                                                 <input type="hidden" name="loan_id" value="<?= $loan['loan_id'] ?>">
                                                 <button type="submit" class="btn btn-delete">
                                                     <i class="fas fa-trash"></i> Delete
@@ -128,13 +131,13 @@ $paginatedLoans = array_slice($allLoans, $offset, $limit);
                                         </td>
                                         <!-- Column for Approve and Reject -->
                                         <td class="actions-container">
-                                            <form action="/PHPLearning/NovaBank/public/admin/approve-loan" method="POST" style="display: inline;">
+                                            <form action="/NovaBank/public/admin/approve-loan" method="POST" style="display: inline;">
                                                 <input type="hidden" name="loan_id" value="<?= $loan['loan_id'] ?>">
                                                 <button type="submit" class="btn btn-edit" <?= $loan['status'] === 'Approved' ? 'disabled' : '' ?>>
                                                     <i class="fas fa-check"></i> Approve
                                                 </button>
                                             </form>
-                                            <form action="/PHPLearning/NovaBank/public/admin/reject-loan" method="POST" style="display: inline;">
+                                            <form action="/NovaBank/public/admin/reject-loan" method="POST" style="display: inline;">
                                                 <input type="hidden" name="loan_id" value="<?= $loan['loan_id'] ?>">
                                                 <button type="submit" class="btn btn-delete" <?= $loan['status'] === 'Rejected' ? 'disabled' : '' ?>>
                                                     <i class="fas fa-times"></i> Reject
@@ -193,11 +196,11 @@ $paginatedLoans = array_slice($allLoans, $offset, $limit);
                                         <!-- Column for Calculate and Delete -->
                                         <td class="actions-container-edit">
                                             <!-- Calculate Loan -->
-                                            <a href="/PHPLearning/NovaBank/public/admin/calculate-loan-page?loan_id=<?= $loan['loan_id'] ?>" class="btn btn-calculate">
+                                            <a href="/NovaBank/public/admin/calculate-loan-page?loan_id=<?= $loan['loan_id'] ?>" class="btn btn-calculate">
                                                 <i class="fas fa-calculator"></i> Calculate
                                             </a>
                                             <!-- Delete Loan -->
-                                            <form action="/PHPLearning/NovaBank/public/admin/delete-loan" method="POST" onsubmit="return confirm('Are you sure you want to delete this loan?');" style="display: inline;">
+                                            <form action="/NovaBank/public/admin/delete-loan" method="POST" onsubmit="return confirm('Are you sure you want to delete this loan?');" style="display: inline;">
                                                 <input type="hidden" name="loan_id" value="<?= $loan['loan_id'] ?>">
                                                 <button type="submit" class="btn btn-delete">
                                                     <i class="fas fa-trash"></i> Delete
@@ -208,14 +211,14 @@ $paginatedLoans = array_slice($allLoans, $offset, $limit);
                                         <!-- Column for Approve and Reject -->
                                         <td class="actions-container">
                                             <!-- Approve Loan -->
-                                            <form action="/PHPLearning/NovaBank/public/admin/approve-loan" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to Approve this Loan?');">
+                                            <form action="/NovaBank/public/admin/approve-loan" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to Approve this Loan?');">
                                                 <input type="hidden" name="loan_id" value="<?= $loan['loan_id'] ?>">
                                                 <button type="submit" class="btn btn-edit" <?= $loan['status'] === 'Approved' ? 'disabled' : '' ?>>
                                                     <i class="fas fa-check"></i> Approve
                                                 </button>
                                             </form>
                                             <!-- Reject Loan -->
-                                            <form action="/PHPLearning/NovaBank/public/admin/reject-loan" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to Reject this Loan?');">
+                                            <form action="/NovaBank/public/admin/reject-loan" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to Reject this Loan?');">
                                                 <input type="hidden" name="loan_id" value="<?= $loan['loan_id'] ?>">
                                                 <button type="submit" class="btn btn-delete" <?= $loan['status'] === 'Rejected' ? 'disabled' : '' ?>>
                                                     <i class="fas fa-times"></i> Reject
@@ -272,7 +275,7 @@ $paginatedLoans = array_slice($allLoans, $offset, $limit);
 
     <?php include __DIR__ . '/../layouts/footer.php'; ?>
 
-    <script src="/PHPLearning/NovaBank/public/assets/js/admin.js"></script>
+    <script src="/NovaBank/public/assets/js/admin.js"></script>
 </body>
 
 </html>

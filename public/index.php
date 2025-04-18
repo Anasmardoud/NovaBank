@@ -34,7 +34,7 @@ $homeController = new HomeController();
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 // Remove the base URL from the URI
-$baseUrl = '/PHPLearning/NovaBank/public';
+$baseUrl = '/NovaBank/public';
 $uri = str_replace($baseUrl, '', $uri);
 
 // Debugging: Log the requested URI
@@ -60,11 +60,14 @@ switch ($uri) {
     case '/client/dashboard':
         $clientController->dashboard();
         break;
-    case '/admin/deposit-history':
-        $adminController->depositHistory();
-        break;
     case '/admin/change-password':
         $adminController->changePassword();
+        break;
+    case '/admin/create-admin-page':
+        $adminController->createAdminPage();
+        break;
+    case '/admin/create-admin':
+        $adminController->createAdmin();
         break;
     case '/admin/client-creation-homepage':
         $adminController->clientCreationHomePage();

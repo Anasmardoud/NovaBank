@@ -93,8 +93,25 @@ class Deposit
     public function getAll()
     {
         try {
-            // Prepare and execute the query
-            $stmt = $this->prepareStatement("SELECT * FROM DEPOSIT ORDER BY created_at DESC");
+            // Prepare and execute the query with JOINs
+            $stmt = $this->prepareStatement("
+            SELECT 
+                d.deposit_id,
+                d.account_id,
+                d.admin_id,
+                d.amount,
+                d.created_at,
+                d.status,
+                c.username AS client_name,
+                a.account_type,
+                ad.username AS admin_name
+            FROM DEPOSIT d
+            JOIN ACCOUNT a ON d.account_id = a.account_id
+            JOIN CLIENT c ON a.client_id = c.client_id
+            JOIN ADMIN ad ON d.admin_id = ad.admin_id
+            ORDER BY d.created_at DESC
+        ");
+
             $this->executeStatement($stmt);
 
             // Fetch the result
@@ -104,7 +121,6 @@ class Deposit
             return [];
         }
     }
-
     /**
      * Delete a deposit by ID.
      *
